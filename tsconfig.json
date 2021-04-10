@@ -13,11 +13,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["./components/*"]
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@images/*": ["./src/images/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/theme.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/theme.js", "src/utils/network.ts"],
   "exclude": ["node_modules"]
 }

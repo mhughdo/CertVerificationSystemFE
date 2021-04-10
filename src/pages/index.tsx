@@ -1,56 +1,63 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+/* eslint-disable import/no-extraneous-dependencies */
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Contract } from 'web3-eth-contract/types/index'
+import UserAbi from '@utils/User.json'
+import { AbiItem } from 'web3-utils/types/index'
+import { getWeb3 } from '@utils/network'
 
-export default function Home() {
+const App = () => {
+  console.log('indexxxx')
+  const [user, setUser] = useState<Contract>()
+  const [rector, setRector] = useState()
+  const [web3, setWeb3] = useState<any>()
+
+  useEffect(() => {
+    const retrieveContract = async () => {
+      const web3 = getWeb3()
+
+      if (!web3) {
+        return
+      }
+      setWeb3(web3)
+      try {
+        const netId = await web3.eth.net.getId()
+        const user = new web3.eth.Contract(UserAbi.abi as AbiItem[], UserAbi.networks[netId].address)
+        setUser(user)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    retrieveContract()
+  }, [web3])
+
+  const getRector = async () => {
+    try {
+      const accounts = await web3.eth.getAccounts()
+      console.log(accounts)
+      const rector = await user.methods.getCurrentRector().call({ from: accounts[0] })
+      console.log(rector)
+      setRector(rector)
+    } catch (error) {
+      console.log('Error getting account', error)
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      getRector()
+    }
+  }, [user])
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+    <div>
+      <Link href='/t'>
+        <a>Go to test page</a>
+      </Link>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href='https://nextjs.org'>Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href='https://nextjs.org/docs' className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href='https://nextjs.org/learn' className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a href='https://github.com/vercel/next.js/tree/master/examples' className={styles.card}>
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-            className={styles.card}>
-            <h3>Deploy &rarr;</h3>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Powered by <img src='/vercel.svg' alt='Vercel Logo' className={styles.logo} />
-        </a>
-      </footer>
+      <div>{JSON.stringify(rector)}</div>
     </div>
   )
 }
+
+export default App
