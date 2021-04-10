@@ -5,11 +5,12 @@ import { Contract } from 'web3-eth-contract/types/index'
 import UserAbi from '@utils/User.json'
 import { AbiItem } from 'web3-utils/types/index'
 import { getWeb3 } from '@utils/network'
+import { useAppState } from '@store/appState'
 
-const App = () => {
+const Index = () => {
   const [user, setUser] = useState<Contract>()
   const [rector, setRector] = useState()
-  const [web3, setWeb3] = useState<any>()
+  const { web3 } = useAppState()
 
   useEffect(() => {
     const retrieveContract = async () => {
@@ -18,7 +19,6 @@ const App = () => {
       if (!web3) {
         return
       }
-      setWeb3(web3)
       try {
         const netId = await web3.eth.net.getId()
         const user = new web3.eth.Contract(UserAbi.abi as AbiItem[], UserAbi.networks[netId].address)
@@ -28,21 +28,19 @@ const App = () => {
       }
     }
     retrieveContract()
-  }, [web3])
-
-  const getRector = async () => {
-    try {
-      const accounts = await web3.eth.getAccounts()
-      console.log(accounts)
-      const rector = await user.methods.getCurrentRector().call({ from: accounts[0] })
-      console.log(rector)
-      setRector(rector)
-    } catch (error) {
-      console.log('Error getting account', error)
-    }
-  }
+  }, [])
 
   useEffect(() => {
+    const getRector = async () => {
+      try {
+        const accounts = await web3.eth.getAccounts()
+        const rector = await user.methods.getCurrentRector().call({ from: accounts[0] })
+        setRector(rector)
+      } catch (error) {
+        console.log('Error getting account', error)
+      }
+    }
+
     if (user) {
       getRector()
     }
@@ -59,4 +57,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Index

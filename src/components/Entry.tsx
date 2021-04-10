@@ -1,12 +1,10 @@
 import Particles from 'react-particles-js'
-import { Box, Text, Button, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
+import { Box, Text, Button, Alert, AlertIcon, AlertDescription } from '@chakra-ui/react'
 import Image from 'next/image'
 
 import Router from 'next/router'
 
-const Login = () => {
-  const hasMetamaskInstalled = window.ethereum
-
+const Entry = ({ err }: { err: string }) => {
   const handleClick = async () => {
     try {
       const res = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -28,16 +26,16 @@ const Login = () => {
           </Text>
         </Box>
         <Box maxW='400px' bg='white' borderRadius='md' p={4} m='0 auto' mt={8}>
-          {!hasMetamaskInstalled && (
+          {err && (
             <Alert status='error' fontSize='sm' mb={2}>
               <AlertIcon />
-              <AlertDescription>Metamask not found! Please install MetaMask to continue.</AlertDescription>
+              <AlertDescription>{err}</AlertDescription>
             </Alert>
           )}
 
           <Text>Log in using:</Text>
-          <Button colorScheme='orange' mt={4} w='100%' onClick={handleClick} disabled={!hasMetamaskInstalled}>
-            <Image src='/metamask-fox.svg' width={16} height={16} />
+          <Button colorScheme='orange' mt={4} w='100%' onClick={handleClick} disabled={!!err}>
+            <Image src='/metamask-fox.png' width={16} height={16} />
             <Text ml={4}>Metamask</Text>
           </Button>
         </Box>
@@ -50,4 +48,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Entry

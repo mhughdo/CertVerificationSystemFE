@@ -16,6 +16,7 @@ export function getWeb3() {
   } else if (window?.web3) {
     web3 = new Web3(window.web3.currentProvider)
   }
+
   // else {
   //   const { INFURA_PROJECT_ID } = process.env
   //   if (process.env.NODE_ENV === 'production' && !INFURA_PROJECT_ID) {
