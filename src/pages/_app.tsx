@@ -32,8 +32,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const getContract = async () => {
       const web3 = getWeb3()
-      await checkNetwork(web3)
-      setWeb3(web3)
+      if (web3) {
+        await checkNetwork(web3)
+        setWeb3(web3)
+      }
 
       setLoading(false)
     }
@@ -65,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Chakra cookies={pageProps.cookies}>
-      {loading || accountLoading ? <Loading /> : !account ? <Login /> : <Component {...pageProps} />}
+      {loading || accountLoading ? <Loading /> : !account || !web3 ? <Login /> : <Component {...pageProps} />}
     </Chakra>
   )
 }
