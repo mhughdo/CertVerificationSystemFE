@@ -8,9 +8,6 @@ import Loading from '@components/Loading'
 import Web3Type from 'web3/types/index'
 import { getWeb3 } from '@utils/network'
 import Login from '@components/Login'
-import { Contract } from 'web3-eth-contract/types/index'
-import UserAbi from '@utils/User.json'
-import { AbiItem } from 'web3-utils/types/index'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isOnCorrectNet, setIsOnCorrectNet] = useState(false)
@@ -20,9 +17,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [accountLoading, setAccountLoading] = useState(true)
 
   useEffect(() => {
+    const getAccount = async (web3: Web3Type) => {
+      if (web3) {
+        const accounts = await web3.eth.getAccounts()
+
+        if (accounts?.length) {
+          setAccount(accounts[0])
+        }
+      }
+      setAccountLoading(false)
+    }
+
     const checkNetwork = async (web3: Web3Type) => {
       try {
-        const networkId = await web3.eth.net.getId()
+        const networkId = await web3?.eth.net.getId()
         const isOnRightNet = networkId === 4
         setIsOnCorrectNet(isOnRightNet)
       } catch (error) {
@@ -32,8 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const getContract = async () => {
       const web3 = getWeb3()
+      await checkNetwork(web3)
+      await getAccount(web3)
       if (web3) {
-        await checkNetwork(web3)
         setWeb3(web3)
       }
 
@@ -41,29 +50,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     getContract()
   }, [])
-
-  useEffect(() => {
-    const getAccount = async () => {
-      if (web3) {
-        const accounts = await web3.eth.getAccounts()
-
-        if (accounts?.length) {
-          setAccount(accounts[0])
-        }
-        setAccountLoading(false)
-      }
-    }
-
-    getAccount()
-  }, [web3])
-
-  // if (loading) {
-  //   return <Loading />
-  // }
-
-  // if (!account) {
-  //   return <Login />
-  // }
 
   return (
     <Chakra cookies={pageProps.cookies}>

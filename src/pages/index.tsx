@@ -7,7 +7,6 @@ import { AbiItem } from 'web3-utils/types/index'
 import { getWeb3 } from '@utils/network'
 
 const App = () => {
-  console.log('indexxxx')
   const [user, setUser] = useState<Contract>()
   const [rector, setRector] = useState()
   const [web3, setWeb3] = useState<any>()
