@@ -3,5 +3,5 @@ module.exports = {
     webpack5: true,
   },
    distDir: 'out',
-   "target": "serverless"
+  target: "experimental-serverless-trace",
 }
