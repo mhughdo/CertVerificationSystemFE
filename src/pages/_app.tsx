@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-extraneous-dependencies */
 import type { AppProps /* , AppContext */ } from 'next/app'
-import '../styles/globals.css'
+import 'tailwindcss/tailwind.css'
 import { Chakra } from '@components/Chakra'
 import { useState, useEffect } from 'react'
 import Loading from '@components/Loading'
