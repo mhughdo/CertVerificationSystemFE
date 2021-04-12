@@ -158,6 +158,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-call": 1,
     "react/prop-types": 0,
     "@typescript-eslint/no-unsafe-call": 0,
+    "import/no-extraneous-dependencies": 0,
   },
   plugins: ['html', 'prettier', 'react-hooks', '@typescript-eslint'],
 };
