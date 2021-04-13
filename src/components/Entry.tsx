@@ -44,14 +44,12 @@ const Entry = ({ err }: { err: string }) => {
         </Box>
         <Box maxW='400px' bg='white' borderRadius='md' p={4} m='0 auto' mt={8}>
           <AnimatePresence>
-            {!isAccountConnected && (
+            {(!isAccountConnected || err) && (
               <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                {err && (
-                  <Alert status='error' fontSize='sm' mb={2}>
-                    <AlertIcon />
-                    <AlertDescription>{err}</AlertDescription>
-                  </Alert>
-                )}
+                <Alert status='error' fontSize='sm' mb={2}>
+                  <AlertIcon />
+                  <AlertDescription>{err}</AlertDescription>
+                </Alert>
 
                 <Text>Log in using:</Text>
                 <Button colorScheme='orange' mt={4} w='100%' onClick={handleClick} disabled={!!err}>
@@ -63,7 +61,7 @@ const Entry = ({ err }: { err: string }) => {
           </AnimatePresence>
 
           <AnimatePresence>
-            {isAccountConnected && !user && (
+            {isAccountConnected && !user && !err && (
               <MotionBox initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ opacity: 0 }}>
                 <Alert status='error' fontSize='sm' mb={2}>
                   <AlertIcon />
