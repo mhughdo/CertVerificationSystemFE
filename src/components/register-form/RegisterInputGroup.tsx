@@ -2,6 +2,8 @@ import { Button, FormControl, FormLabel, Input, useToast, Stack, Box, Text, Aler
 import MarkdownEditor from '@components/MarkdownEditor'
 import { useAppState } from '@store/appState'
 import { useState, useRef } from 'react'
+import MotionBox from '@components/MotionBox'
+import { AnimatePresence } from 'framer-motion'
 
 export const RegisterInputGroup = () => {
   const signUpRef = useRef(null)
@@ -22,9 +24,8 @@ export const RegisterInputGroup = () => {
       const description = form.description.value
       const res = await userContract.methods
         .createCompany(companyName, description, markdownValue)
-        .call({ from: accountAddress })
+        .send({ from: accountAddress })
 
-      console.log(res)
       if (res) {
         setSignUpSuccess(true)
       }
@@ -44,7 +45,7 @@ export const RegisterInputGroup = () => {
 
   return (
     <>
-      {!signUpSuccess ? (
+      {!signUpSuccess && (
         <form ref={signUpRef} onSubmit={onSubmit}>
           <Stack spacing='6'>
             <FormControl id='company-name'>
@@ -56,7 +57,7 @@ export const RegisterInputGroup = () => {
               <Input id='description' name='description' type='text' required />
             </FormControl>
             <Box>
-              <Text>Job description</Text>
+              <Text mb={2}>Job description</Text>
               <MarkdownEditor setValue={setMarkDownValue} />
             </Box>
             <Button type='submit' colorScheme='blue' size='lg' fontSize='md' disabled={loading}>
@@ -64,12 +65,17 @@ export const RegisterInputGroup = () => {
             </Button>
           </Stack>
         </form>
-      ) : (
-        <Alert status='success'>
-          <AlertIcon />
-          Successfully registered an account, please wait until Office of Academic Affairs approves your account!
-        </Alert>
       )}
+      <AnimatePresence>
+        {signUpSuccess && (
+          <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Alert status='success'>
+              <AlertIcon />
+              Successfully registered an account, please wait until Office of Academic Affairs approves your account!
+            </Alert>
+          </MotionBox>
+        )}
+      </AnimatePresence>
     </>
   )
 }

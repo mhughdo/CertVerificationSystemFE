@@ -1,4 +1,4 @@
-import { useState, FC } from 'react'
+import { FC } from 'react'
 import Editor from 'rich-markdown-editor'
 import { Box, useToast } from '@chakra-ui/react'
 import axios from 'axios'

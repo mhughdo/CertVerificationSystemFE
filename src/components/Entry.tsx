@@ -1,16 +1,12 @@
-import { useState, FC } from 'react'
+import { useState } from 'react'
 import Particles from 'react-particles-js'
-import { Box, Text, Button, Alert, AlertIcon, AlertDescription, HTMLChakraProps, chakra } from '@chakra-ui/react'
+import { Box, Text, Button, Alert, AlertIcon, AlertDescription } from '@chakra-ui/react'
 import Image from 'next/image'
-
-import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion'
+import MotionBox from '@components/MotionBox'
+import { AnimatePresence } from 'framer-motion'
+import { useAppState, User } from '@store/appState'
 
 import Router from 'next/router'
-import { useAppState } from '@store/appState'
-
-type Merge<P, T> = Omit<P, keyof T> & T
-type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>
-export const MotionBox: FC<MotionBoxProps> = motion(chakra.div)
 
 const Entry = ({ err }: { err: string }) => {
   const { state } = useAppState()
@@ -44,7 +40,7 @@ const Entry = ({ err }: { err: string }) => {
         </Box>
         <Box maxW='400px' bg='white' borderRadius='md' p={4} m='0 auto' mt={8}>
           <AnimatePresence>
-            {(!isAccountConnected || err) && (
+            {(!isAccountConnected || (err && !user)) && (
               <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <Alert status='error' fontSize='sm' mb={2}>
                   <AlertIcon />
@@ -71,6 +67,17 @@ const Entry = ({ err }: { err: string }) => {
                 <Button colorScheme='teal' size='md' w='100%' mt={4} onClick={() => Router.push('/register')}>
                   Sign up
                 </Button>
+              </MotionBox>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {isAccountConnected && err && (user as User & { isActive: boolean })?.isActive === false && (
+              <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <Alert status='error' fontSize='sm' mb={2}>
+                  <AlertIcon />
+                  <AlertDescription>{err}</AlertDescription>
+                </Alert>
               </MotionBox>
             )}
           </AnimatePresence>

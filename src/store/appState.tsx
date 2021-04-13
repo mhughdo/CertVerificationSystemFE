@@ -2,6 +2,13 @@ import { createContext, useContext, ReactNode, useReducer } from 'react'
 import Web3Type from 'web3/types/index'
 import { Contract } from 'web3-eth-contract/types/index'
 
+export enum Role {
+  RECTOR = 'rector',
+  AADEPARTMENT = 'AADepartment',
+  STUDENT = 'student',
+  COMPANY = 'company',
+}
+
 type Student = {
   role: string
   account: string

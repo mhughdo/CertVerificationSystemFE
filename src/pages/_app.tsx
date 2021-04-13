@@ -8,7 +8,7 @@ import Loading from '@components/Loading'
 import Web3Type from 'web3/types/index'
 import { getWeb3 } from '@utils/network'
 import Entry from '@components/Entry'
-import { AppProvider, useAppState, User } from '@store/appState'
+import { AppProvider, Role, useAppState, User } from '@store/appState'
 import UserContract from '@contracts/User.json'
 import { AbiItem } from 'web3-utils/types/index'
 import { useToast } from '@chakra-ui/react'
@@ -16,6 +16,7 @@ import { useToast } from '@chakra-ui/react'
 enum Error {
   NO_METAMASK = 'Metamask not found! Please install MetaMask to continue.',
   NOT_RINKEBY = 'Please connect to rinkeby network',
+  NOT_ACTIVATED = 'Your account is not activated yet. Contact Office of Academic Affairs for more information.',
 }
 
 function SubApp({ Component, pageProps, router }: AppProps) {
@@ -39,6 +40,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
 
   useEffect(() => {
     const getAccount = async (web3: Web3Type) => {
+      if (err === Error.NOT_RINKEBY) return
       setAccountLoading(true)
       const accounts = await web3.eth.getAccounts()
 
@@ -119,7 +121,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      if (!userContract) return
+      if (!userContract || err === Error.NOT_RINKEBY) return
       setUserLoading(true)
       const users = await userContract.methods.getCurrentUser().call({ from: accountAddress })
       const [, validUser] =
@@ -138,6 +140,10 @@ function SubApp({ Component, pageProps, router }: AppProps) {
         return acc
       }, {}) as User
 
+      if (role.name !== Role.RECTOR && (normalizedUser as any)?.isActive === false) {
+        setErr(Error.NOT_ACTIVATED)
+      }
+
       dispatch({ type: 'USER_CHANGE', user: { ...normalizedUser, role: role.name } })
       setUserLoading(false)
     }
@@ -148,6 +154,8 @@ function SubApp({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
     window?.ethereum?.on('chainChanged', (_chainId: number) => window.location.reload())
     window?.ethereum?.on('accountsChanged', (accounts: string[]) => {
+      setErr('')
+      dispatch({ type: 'USER_CHANGE', user: null })
       dispatch({ type: 'ADDRESS_CHANGE', accountAddress: accounts[0] })
     })
   }, [])

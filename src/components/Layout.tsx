@@ -2,13 +2,40 @@ import { FC, useState } from 'react'
 import Image from 'next/image'
 import { Transition } from '@headlessui/react'
 import useOnclickOutside from 'react-cool-onclickoutside'
+import { Role, useAppState } from '@store/appState'
+import { useRouter } from 'next/router'
 
 const Layout: FC = ({ children }) => {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false)
   const [mainMenuOpen, setMainMenuOpen] = useState<boolean>(false)
+  const { asPath } = useRouter()
   const ref = useOnclickOutside(() => {
     setProfileMenuOpen(false)
   })
+
+  const { state } = useAppState()
+  const { user } = state
+
+  const activeLinkClasses = 'bg-gray-900 text-white'
+  const linkClasses = 'text-gray-300 hover:bg-gray-700 hover:text-white'
+  const getLinkClassName = (path) =>
+    `${asPath === path ? activeLinkClasses : linkClasses} px-3 py-2 rounded-md text-sm font-medium`
+
+  const RectorNav = (
+    <>
+      <a href='/' className={getLinkClassName('/')}>
+        Dashboard
+      </a>
+
+      <a href='/' className={getLinkClassName('/certificate/manage')}>
+        Team
+      </a>
+    </>
+  )
+
+  const roleToNav = {
+    [Role.RECTOR]: RectorNav,
+  }
 
   return (
     <>
@@ -27,33 +54,7 @@ const Layout: FC = ({ children }) => {
                         <div className='hidden md:block'>
                           <div className='ml-10 flex items-baseline space-x-4'>
                             {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                            <a href='/' className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
-                              Dashboard
-                            </a>
-
-                            <a
-                              href='/'
-                              className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                              Team
-                            </a>
-
-                            <a
-                              href='/'
-                              className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                              Projects
-                            </a>
-
-                            <a
-                              href='/'
-                              className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                              Calendar
-                            </a>
-
-                            <a
-                              href='/'
-                              className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                              Reports
-                            </a>
+                            {roleToNav[user.role] || null}
                           </div>
                         </div>
                       </div>
@@ -96,20 +97,6 @@ const Layout: FC = ({ children }) => {
                                 className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                                 role='menuitem'>
                                 Your Profile
-                              </a>
-
-                              <a
-                                href='/'
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                                role='menuitem'>
-                                Settings
-                              </a>
-
-                              <a
-                                href='/'
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                                role='menuitem'>
-                                Sign out
                               </a>
                             </Transition>
                           </div>
@@ -231,18 +218,6 @@ const Layout: FC = ({ children }) => {
                           href='/'
                           className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
                           Your Profile
-                        </a>
-
-                        <a
-                          href='/'
-                          className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                          Settings
-                        </a>
-
-                        <a
-                          href='/'
-                          className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                          Sign out
                         </a>
                       </div>
                     </div>
