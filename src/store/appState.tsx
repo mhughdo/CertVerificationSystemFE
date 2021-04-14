@@ -9,8 +9,8 @@ export enum Role {
   COMPANY = 'company',
 }
 
-type Student = {
-  role: string
+export type Student = {
+  role?: string
   account: string
   studentId: string
   name: string
@@ -24,24 +24,24 @@ type Student = {
   nonce: number
 }
 
-type Rector = {
-  role: string
+export type Rector = {
+  role?: string
   name: string
   date: string
   phone: string
   term: string
 }
 
-type AADUser = {
-  role: string
+export type AADUser = {
+  role?: string
   name: string
   date: string
   phone: string
-  isActive: string
+  isActive: boolean
 }
 
-type Company = {
-  role: string
+export type Company = {
+  role?: string
   name: string
   description: string
   jobInfo: string

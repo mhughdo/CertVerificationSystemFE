@@ -9,6 +9,7 @@ import { useAppState, User } from '@store/appState'
 import Router from 'next/router'
 
 const Entry = ({ err }: { err: string }) => {
+  console.log(err)
   const { state } = useAppState()
   const { user, accountAddress } = state
   const [isAccountConnected, setIsAccountConnected] = useState(!!accountAddress)
@@ -42,10 +43,12 @@ const Entry = ({ err }: { err: string }) => {
           <AnimatePresence>
             {(!isAccountConnected || (err && !user)) && (
               <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <Alert status='error' fontSize='sm' mb={2}>
-                  <AlertIcon />
-                  <AlertDescription>{err}</AlertDescription>
-                </Alert>
+                {err && (
+                  <Alert status='error' fontSize='sm' mb={2}>
+                    <AlertIcon />
+                    <AlertDescription>{err}</AlertDescription>
+                  </Alert>
+                )}
 
                 <Text>Log in using:</Text>
                 <Button colorScheme='orange' mt={4} w='100%' onClick={handleClick} disabled={!!err}>

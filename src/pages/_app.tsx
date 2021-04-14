@@ -10,6 +10,7 @@ import { getWeb3 } from '@utils/network'
 import Entry from '@components/Entry'
 import { AppProvider, Role, useAppState, User } from '@store/appState'
 import UserContract from '@contracts/User.json'
+import CertificateContract from '@contracts/Certificate.json'
 import { AbiItem } from 'web3-utils/types/index'
 import { useToast } from '@chakra-ui/react'
 

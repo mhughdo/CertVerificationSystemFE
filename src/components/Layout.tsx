@@ -5,7 +5,7 @@ import useOnclickOutside from 'react-cool-onclickoutside'
 import { Role, useAppState } from '@store/appState'
 import { useRouter } from 'next/router'
 
-const Layout: FC = ({ children }) => {
+const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false)
   const [mainMenuOpen, setMainMenuOpen] = useState<boolean>(false)
   const { asPath } = useRouter()
@@ -24,11 +24,11 @@ const Layout: FC = ({ children }) => {
   const RectorNav = (
     <>
       <a href='/' className={getLinkClassName('/')}>
-        Dashboard
+        Academic Affairs Accounts
       </a>
 
-      <a href='/' className={getLinkClassName('/certificate/manage')}>
-        Team
+      <a href='/certificate/manage' className={getLinkClassName('/certificate/manage')}>
+        Certificate
       </a>
     </>
   )
@@ -42,7 +42,7 @@ const Layout: FC = ({ children }) => {
       <div className=''>
         <div className='bg-gray-100 h-screen'>
           <div>
-            <div className='bg-gray-800 pb-32'>
+            <div className={`bg-gray-800 ${pageTitle ? 'pb-32' : 'pb-52'}`}>
               <nav className='bg-gray-800'>
                 <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
                   <div className='border-b border-gray-700'>
@@ -226,7 +226,7 @@ const Layout: FC = ({ children }) => {
               </nav>
               <header className='py-10'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                  <h1 className='text-3xl font-bold text-white'>Dashboard</h1>
+                  <h1 className='text-3xl font-bold text-white'>{pageTitle}</h1>
                 </div>
               </header>
             </div>
@@ -234,7 +234,9 @@ const Layout: FC = ({ children }) => {
             <main className='-mt-32'>
               <div className='max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8'>
                 {/* Replace with your content */}
-                <div className='bg-white rounded-lg shadow px-5 py-6 sm:px-6 h-96'>{children}</div>
+                <div className='bg-white rounded-lg shadow px-5 py-6 sm:px-6' style={{ minHeight: '400px' }}>
+                  {children}
+                </div>
                 {/* /End replace */}
               </div>
             </main>
