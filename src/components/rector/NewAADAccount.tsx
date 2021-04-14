@@ -43,7 +43,6 @@ const NewAADAccount = () => {
       const phoneNumber = formData.phone_number
       const formattedDate = formatDate(date)
 
-      console.log({ address, name, formattedDate, phoneNumber })
       await userContract.methods
         .createAADepartmentUser(address, name, formattedDate, phoneNumber)
         .send({ from: accountAddress })
@@ -61,7 +60,7 @@ const NewAADAccount = () => {
       if (error?.code === 4001) return
       toast({
         title: 'Error.',
-        description: 'Error occured while fetching deactivate account!',
+        description: 'Error occured while creating account!',
         status: 'error',
         duration: 3000,
         position: 'top',

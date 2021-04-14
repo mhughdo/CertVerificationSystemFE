@@ -4,6 +4,7 @@ import { Transition } from '@headlessui/react'
 import useOnclickOutside from 'react-cool-onclickoutside'
 import { Role, useAppState } from '@store/appState'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false)
@@ -23,18 +24,31 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
 
   const RectorNav = (
     <>
-      <a href='/' className={getLinkClassName('/')}>
-        Academic Affairs Accounts
-      </a>
+      <Link href='/'>
+        <a className={getLinkClassName('/')}>Academic Affairs Accounts</a>
+      </Link>
 
-      <a href='/certificate/manage' className={getLinkClassName('/certificate/manage')}>
-        Certificate
-      </a>
+      <Link href='/certificate/manage'>
+        <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
+      </Link>
+    </>
+  )
+
+  const AADNav = (
+    <>
+      <Link href='/'>
+        <a className={getLinkClassName('/')}>Student</a>
+      </Link>
+
+      <Link href='/certificate/manage'>
+        <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
+      </Link>
     </>
   )
 
   const roleToNav = {
     [Role.RECTOR]: RectorNav,
+    [Role.AADEPARTMENT]: AADNav,
   }
 
   return (

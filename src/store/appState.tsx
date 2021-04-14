@@ -11,15 +11,14 @@ export enum Role {
 
 export type Student = {
   role?: string
-  account: string
-  studentId: string
+  id: string
   name: string
   email: string
   phone: string
   class: string
   major: string
   cpa: string
-  qualifiedForGraduation: string
+  qualifiedForGraduation: boolean
   isActive: boolean
   nonce: number
 }
