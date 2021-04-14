@@ -30,7 +30,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
   const { state, dispatch } = useAppState()
   const { web3, accountAddress, userContract, user } = state
   const loading = initLoading || accountLoading || constractLoading || userLoading
-  const nonRequiredAuthRoutes = ['/register']
+  const nonRequiredAuthRoutes = ['/register', '/student/activate']
   const { pathname } = router
   const isNonRequiredAuthRoute = nonRequiredAuthRoutes.includes(pathname)
 

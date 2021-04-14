@@ -9,7 +9,6 @@ import { useAppState, User } from '@store/appState'
 import Router from 'next/router'
 
 const Entry = ({ err }: { err: string }) => {
-  console.log(err)
   const { state } = useAppState()
   const { user, accountAddress } = state
   const [isAccountConnected, setIsAccountConnected] = useState(!!accountAddress)

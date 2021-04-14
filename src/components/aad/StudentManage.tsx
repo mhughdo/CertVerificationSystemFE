@@ -28,7 +28,7 @@ const StudentManage = () => {
         // batch.execute()
 
         const studentList = (await userContract.methods.getAllStudent().call({ from: accountAddress })) || []
-
+        console.log(studentList)
         const normalizedAccountList = studentList.map(normalizeWeb3Object)
         setStudentList(normalizedAccountList)
       } catch (error) {
