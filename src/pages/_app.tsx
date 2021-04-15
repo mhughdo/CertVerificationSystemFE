@@ -161,6 +161,14 @@ function SubApp({ Component, pageProps, router }: AppProps) {
     })
   }, [])
 
+  if (router.pathname === '/certificate/generate') {
+    return (
+      <Chakra cookies={pageProps.cookies}>
+        <Component {...pageProps} />
+      </Chakra>
+    )
+  }
+
   if (loading) {
     return (
       <Chakra cookies={pageProps.cookies}>

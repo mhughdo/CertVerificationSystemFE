@@ -15,6 +15,7 @@ import Layout from '@components/Layout'
 import { useAppState } from '@store/appState'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import axios from 'axios'
 
 type FormData = {
   studentID: string
@@ -44,6 +45,11 @@ const NewStudent = () => {
       await userContract.methods
         .createStudent(studentID, name, email, phone, studentClass, major, cpa, qualifiedForGraduation)
         .send({ from: accountAddress })
+
+      const nonce = await userContract.methods.getStudentNonce(studentID).call({ from: accountAddress })
+      console.log(nonce)
+
+      await axios.post('/api/send-email', { to: email, studentID, nonce })
 
       toast({
         title: 'Success',

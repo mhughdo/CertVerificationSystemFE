@@ -20,6 +20,7 @@ const ActivateStudent = () => {
         }
       } catch (error) {
         console.log(error)
+        if (error?.code === 4001) return
         setHasError(true)
       } finally {
         setLoading(false)
@@ -84,11 +85,24 @@ const ActivateStudent = () => {
                 Account was activated successfully!
               </Alert>
               <Box d='flex' justifyContent='center' mt={4}>
-                <Button colorScheme='teal' size='md' onClick={() => Router.push('/')}>
+                <Button
+                  colorScheme='teal'
+                  size='md'
+                  onClick={() => {
+                    window.location.href = '/'
+                  }}>
                   Go to home page
                 </Button>
               </Box>
             </>
+          )}
+
+          {!user && studentID && nonce && hasError && (
+            <Alert status='error'>
+              <AlertIcon />
+              <AlertTitle mr={2}>Activation failed!</AlertTitle>
+              <AlertDescription>Error occured while activating your account, please try again.</AlertDescription>
+            </Alert>
           )}
         </Box>
       </Box>

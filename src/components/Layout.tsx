@@ -43,6 +43,9 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
       <Link href='/certificate/manage'>
         <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
       </Link>
+      <Link href='/company/manage'>
+        <a className={getLinkClassName('/company/manage')}>Company</a>
+      </Link>
     </>
   )
 
@@ -63,7 +66,11 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                     <div className='flex items-center justify-between h-16 px-4 sm:px-0'>
                       <div className='flex items-center'>
                         <div className='flex-shrink-0'>
-                          <Image width='32px' height='32px' src='/logo.png' alt='Workflow' />
+                          <Link href='/'>
+                            <a className='cursor-pointer'>
+                              <Image width='32px' height='32px' src='/logo.png' alt='Workflow' />
+                            </a>
+                          </Link>
                         </div>
                         <div className='hidden md:block'>
                           <div className='ml-10 flex items-baseline space-x-4'>

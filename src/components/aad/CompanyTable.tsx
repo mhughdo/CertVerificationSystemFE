@@ -14,30 +14,30 @@ import {
   ButtonGroup,
   useToast,
 } from '@chakra-ui/react'
-import { useAppState, AADUser } from '@store/appState'
+import { useAppState, Company } from '@store/appState'
 import { FC } from 'react'
 
-const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args: any[]) => void }> = ({
-  AADAccountList,
-  setAADAccountList,
+const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]) => void }> = ({
+  companyList,
+  setCompanyList,
 }) => {
   const toast = useToast()
   const { state } = useAppState()
   const { userContract, accountAddress } = state
 
-  const deactivateAccount = (id: number) => async () => {
+  const activateCompanyAccount = (id: number) => async () => {
     try {
-      await userContract.methods.deactiveAADepartmentUser(id).send({ from: accountAddress })
+      await userContract.methods.approveCompany(id).send({ from: accountAddress })
 
-      const newAccountList = [...AADAccountList]
-      const unactivatedAcc = newAccountList[id]
-      unactivatedAcc.isActive = false
-      newAccountList[id] = unactivatedAcc
+      const newAccountList = [...companyList]
+      const activatedAcc = newAccountList[id]
+      activatedAcc.isActive = true
+      newAccountList[id] = activatedAcc
 
-      setAADAccountList(newAccountList)
+      setCompanyList(newAccountList)
       toast({
         title: 'Success',
-        description: 'Account was successfully deactivated!',
+        description: 'Account was successfully activated!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -47,7 +47,7 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
       if (error?.code === 4001) {
         toast({
           title: 'Info',
-          description: 'Canceled account deactivation!',
+          description: 'Canceled account activation!',
           status: 'info',
           duration: 2000,
           position: 'top',
@@ -56,7 +56,7 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
       }
       toast({
         title: 'Error.',
-        description: 'Error occured while deactivating account!',
+        description: 'Error occured while activating account!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -83,32 +83,21 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Phone
-                        </th>
-                        <th
-                          scope='col'
-                          className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Date
-                        </th>
-                        <th
-                          scope='col'
-                          className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Status
+                          Description
                         </th>
                         <th scope='col' className='relative px-6 py-3'>
-                          <span className='sr-only'>Deactivate</span>
+                          <span className='sr-only'>Activate</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200' data-todo-x-max='1'>
-                      {AADAccountList.length ? (
-                        AADAccountList.map((account, index) => (
+                      {companyList.length ? (
+                        companyList.map((account, index) => (
                           <tr key={index}>
                             <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
                               {account.name}
                             </td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.phone}</td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.date}</td>
+                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.description}</td>
                             <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                               {account.isActive ? (
                                 <Tag colorScheme='green'>Active</Tag>
@@ -121,23 +110,23 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
                                 {({ isOpen, onClose }) => (
                                   <>
                                     <PopoverTrigger>
-                                      <Button>Deactivate</Button>
+                                      <Button>Activate</Button>
                                     </PopoverTrigger>
                                     <Portal>
                                       <PopoverContent>
                                         <PopoverArrow />
                                         <PopoverCloseButton />
                                         <PopoverHeader>Confirmation!</PopoverHeader>
-                                        <PopoverBody>Are you sure you want to deactivate this account?</PopoverBody>
+                                        <PopoverBody>Are you sure you want to activate this account?</PopoverBody>
                                         <PopoverFooter d='flex' justifyContent='flex-end'>
                                           <ButtonGroup size='sm'>
                                             <Button
                                               colorScheme='red'
                                               onClick={() => {
-                                                deactivateAccount(index)()
+                                                activateCompanyAccount(index)()
                                                 onClose()
                                               }}>
-                                              Deactivate
+                                              Activate
                                             </Button>
                                           </ButtonGroup>
                                         </PopoverFooter>
@@ -166,4 +155,4 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
   )
 }
 
-export default AADUserTable
+export default CompanyTable
