@@ -91,8 +91,8 @@ const generate = () => (
             Cấp
           </Text>
         </Box>
-        <Box ml={32}>
-          <Text fontSize='6xl' letterSpacing='md' color='red.500' ml={16}>
+        <Box ml={48}>
+          <Text fontSize='6xl' letterSpacing='md' color='red.500' ml={4}>
             BẰNG CỬ NHÂN
           </Text>
           <Stack>

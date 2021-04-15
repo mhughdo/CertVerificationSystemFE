@@ -110,7 +110,7 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                                 {({ isOpen, onClose }) => (
                                   <>
                                     <PopoverTrigger>
-                                      <Button>Activate</Button>
+                                      <Button disabled={account.isActive}>Activate</Button>
                                     </PopoverTrigger>
                                     <Portal>
                                       <PopoverContent>
