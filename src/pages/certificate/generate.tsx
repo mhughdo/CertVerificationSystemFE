@@ -2,10 +2,37 @@ import Image from 'next/image'
 import { Text, Box, SimpleGrid, Stack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
+const gradeEnToVi = {
+  excellent: 'Xuất săc',
+  good: 'Giỏi',
+  credit: 'Khá',
+}
+
+const monthEn = {
+  0: 'January',
+  1: 'February',
+  2: 'March',
+  3: 'April',
+  4: 'May',
+  5: 'June',
+  6: 'July',
+  7: 'August',
+  8: 'September',
+  9: 'October',
+  10: 'November',
+  11: 'December',
+}
+
 const CertGenerate = () => {
   const router = useRouter()
   const { query } = router
-  const { major = 'Information Technology', name = 'Do Manh Hung', grade = 'Excellent' } = query
+  const { major = 'Information Technology', name = 'Do Manh Hung', grade = 'Excellent', dob = '12/11/1999' } = query
+
+  const getDOB = () => {
+    if (typeof dob !== 'string') return ''
+
+    return `${dob.split('/')[0]} ${monthEn[Number(dob.split('/')[1]) - 1]} ${dob.split('/')[2]}`
+  }
 
   return (
     <Box w='100vw' h='100vh' d='flex' justifyContent='center'>
@@ -63,7 +90,7 @@ const CertGenerate = () => {
               <Box fontSize='xl' d='flex' alignItems='baseline'>
                 <Text>Date of birth: </Text>
                 <Text ml={4} fontWeight='bold'>
-                  12 November 1999
+                  {getDOB()}
                 </Text>
               </Box>
               <Box fontSize='xl' d='flex' alignItems='baseline'>
@@ -105,7 +132,7 @@ const CertGenerate = () => {
               <Text fontSize='xl'>
                 Ngành:{' '}
                 <b>
-                  <i>Công nghệ thông tin</i>
+                  <i>{major}</i>
                 </b>
               </Text>
               <Box fontSize='xl' d='flex'>
@@ -113,19 +140,19 @@ const CertGenerate = () => {
                   Hình thức: <b>Chính quy</b>
                 </Text>
                 <Text ml={16}>
-                  Hạng: <b>Khá</b>
+                  Hạng: <b>{gradeEnToVi[`${(grade as string).toLowerCase()}`] || 'Xuất sắc'}</b>
                 </Text>
               </Box>
               <Box fontSize='xl' d='flex' alignItems='baseline'>
                 <Text>Cho: </Text>
                 <Text ml={4} fontSize='3xl' fontWeight='bold' fontStyle='italic'>
-                  ông Đỗ Mạnh Hùng
+                  ông {name}
                 </Text>
               </Box>
               <Box fontSize='xl' d='flex' alignItems='baseline'>
                 <Text>Sinh ngày: </Text>
                 <Text ml={4} fontWeight='bold'>
-                  12/11/1999
+                  {dob}
                 </Text>
               </Box>
               <Box fontSize='xl' d='flex' alignItems='baseline'>

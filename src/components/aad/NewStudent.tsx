@@ -10,12 +10,16 @@ import {
   Input,
   InputGroup,
   Select,
+  Text,
 } from '@chakra-ui/react'
 import Layout from '@components/Layout'
 import { useAppState } from '@store/appState'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
+import { useState } from 'react'
+import DatePicker from '@components/DatePicker'
+import { formatDate } from '@utils/index'
 
 type FormData = {
   studentID: string
@@ -29,9 +33,11 @@ type FormData = {
 }
 
 const NewStudent = () => {
+  const [date, setDate] = useState(new Date())
   const toast = useToast()
   const { state } = useAppState()
   const { userContract, accountAddress } = state
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -40,10 +46,12 @@ const NewStudent = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     try {
+      setLoading(true)
       const { studentID, name, email, phone, studentClass, major, cpa, qualifiedForGraduation } = formData
+      const formattedDate = formatDate(date)
 
       await userContract.methods
-        .createStudent(studentID, name, email, phone, studentClass, major, cpa, qualifiedForGraduation)
+        .createStudent(studentID, name, email, formattedDate, phone, studentClass, major, cpa, qualifiedForGraduation)
         .send({ from: accountAddress })
 
       const nonce = await userContract.methods.getStudentNonce(studentID).call({ from: accountAddress })
@@ -68,6 +76,8 @@ const NewStudent = () => {
         duration: 3000,
         position: 'top',
       })
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -104,6 +114,10 @@ const NewStudent = () => {
                   </InputGroup>
                   <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
                 </FormControl>
+                <Box>
+                  <Text mb={4}>Date of birth</Text>
+                  <DatePicker onChange={(value) => setDate(value)} value={date} />
+                </Box>
                 <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
                   <FormLabel>Phone Number</FormLabel>
                   <InputGroup>
@@ -142,7 +156,7 @@ const NewStudent = () => {
                   </Select>
                 </FormControl>
 
-                <Button type='submit' colorScheme='blue' size='lg' fontSize='md'>
+                <Button type='submit' colorScheme='blue' size='lg' fontSize='md' disabled={loading}>
                   Create
                 </Button>
               </Stack>

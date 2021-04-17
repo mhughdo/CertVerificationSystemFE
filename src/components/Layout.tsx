@@ -33,6 +33,9 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
       <Link href='/certificate/manage'>
         <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
       </Link>
+      <Link href='/rector/transfer'>
+        <a className={getLinkClassName('/certificate/manage')}>Rector Transfer</a>
+      </Link>
     </>
   )
 

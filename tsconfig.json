@@ -18,9 +18,18 @@
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@store/*": ["src/store/*"],
-      "@contracts/*": ["src/contracts/*"]
+      "@contracts/*": ["src/contracts/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/theme.js", "src/utils/network.ts", "src/components/MarkdownEditor.tsx", "src/pages/api/sign-s3.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/styles/theme.js",
+    "src/utils/network.ts",
+    "src/components/MarkdownEditor.tsx",
+    "src/pages/api/sign-s3.ts"
+  ],
   "exclude": ["node_modules"]
 }

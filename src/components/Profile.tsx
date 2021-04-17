@@ -2,7 +2,7 @@
 import { useAppState, Student, Rector, Company, AADUser, Role } from '@store/appState'
 
 const StudentProfile = ({ student }: { student: Student }) => {
-  const { id, name, email, phone, major, cpa, qualifiedForGraduation } = student
+  const { id, name, email, date, phone, major, cpa, qualifiedForGraduation } = student
 
   const studentClass = student.class
 
@@ -28,6 +28,10 @@ const StudentProfile = ({ student }: { student: Student }) => {
                 <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
                   <dt className='text-sm font-medium text-gray-500'>Email address</dt>
                   <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{email}</dd>
+                </div>
+                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                  <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
                 </div>
                 <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
                   <dt className='text-sm font-medium text-gray-500'>Phone</dt>
