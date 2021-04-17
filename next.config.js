@@ -22,6 +22,9 @@ function useEsbuildLoader(config, options) {
 }
 
 module.exports = {
+   images: {
+    domains: ['*.amazonaws.com', 'uet-cert-verification.s3-ap-southeast-1.amazonaws.com'],
+  },
   future: {
     webpack5: true,
   },

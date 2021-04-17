@@ -54,9 +54,18 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
     </>
   )
 
+  const StudentNav = (
+    <>
+      <Link href='/'>
+        <a className={getLinkClassName('/')}>My Certificate</a>
+      </Link>
+    </>
+  )
+
   const roleToNav = {
     [Role.RECTOR]: RectorNav,
     [Role.AADEPARTMENT]: AADNav,
+    [Role.STUDENT]: StudentNav,
   }
 
   return (

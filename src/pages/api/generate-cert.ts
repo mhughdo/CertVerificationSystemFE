@@ -76,12 +76,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors)
 
   if (req.method === 'POST') {
-    const { major, grade, name, studentID } = req.body
+    const { major, grade, name, studentID, dob } = req.body
 
-    if (!major || !grade || !name || !studentID) {
+    if (!major || !grade || !name || !studentID || !dob) {
       res.status(400).json({ error: 'Missing params!' })
     }
-    const params = `major=${major}&grade=${grade}&name=${name}`
+    const params = `major=${major}&grade=${grade}&name=${name}&dob=${dob}}`
     const URL =
       process.env.NODE_ENV === 'production'
         ? `https://https://uet-cert-verification.netlify.app/certificate/generate?${params}`

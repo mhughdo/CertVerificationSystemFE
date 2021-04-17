@@ -42,7 +42,7 @@ const CertTable: FC<{
       await axios.post('/api/generate-cert', {
         major: certList[id].studentMajor,
         grade: certList[id].grade,
-        name: certList[id].name,
+        name: certList[id].studentName,
         studentID: certList[id].studentID,
         dob: certList[id].studentDOB,
       })
@@ -53,6 +53,13 @@ const CertTable: FC<{
       newCertList[id] = signedItem
 
       setCertList(newCertList)
+      toast({
+        title: 'Success',
+        description: 'Cert was successfully signed!',
+        status: 'success',
+        duration: 2000,
+        position: 'top',
+      })
     } catch (error) {
       console.log(error)
       if (error?.code === 4001) {
