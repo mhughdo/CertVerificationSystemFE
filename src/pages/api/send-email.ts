@@ -25,7 +25,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors)
   const { MAIL_GUN_API_KEY, MAIL_GUN_DOMAIN } = process.env
   const { to, studentID, nonce } = req.body
-  const activationURL = `https://uet-cert-verification.netlify.app/student/activate?studentID=${studentID}&nonce=${nonce}`
+  const activationURL =
+    process.env.NODE_ENV === 'production'
+      ? `https://uet-cert-verification.netlify.app/student/activate?studentID=${studentID}&nonce=${nonce}`
+      : `http://localhost:3000/student/activate?studentID=${studentID}&nonce=${nonce}`
   const emailTemplate = (
     await fs.readFile(path.join(process.cwd(), '/src/assets/email-template.txt'), 'utf-8')
   ).replace('{activation_url}', activationURL)

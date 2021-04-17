@@ -28,7 +28,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
   const [err, setErr] = useState('')
   const toast = useToast()
   const { state, dispatch } = useAppState()
-  const { web3, accountAddress, userContract, user } = state
+  const { web3, accountAddress, userContract, certContract, user } = state
   const loading = initLoading || accountLoading || constractLoading || userLoading
   const nonRequiredAuthRoutes = ['/register', '/student/activate']
   const { pathname } = router
@@ -86,13 +86,13 @@ function SubApp({ Component, pageProps, router }: AppProps) {
 
   useEffect(() => {
     const retrieveContract = async () => {
-      if (!accountAddress || !web3 || userContract) {
+      if (!accountAddress || !web3 || userContract || certContract) {
         return
       }
       setContractLoading(true)
       try {
         const netId = await web3.eth.net.getId()
-        const networkAddress = UserContract.networks[netId]?.address
+        const networkAddress = UserContract.networks[netId]?.address && CertificateContract.networks[netId]?.address
         if (!networkAddress) {
           toast({
             title: 'Error.',
@@ -104,6 +104,11 @@ function SubApp({ Component, pageProps, router }: AppProps) {
           return
         }
         const userContract = new web3.eth.Contract(UserContract.abi as AbiItem[], UserContract.networks[netId].address)
+        const certContract = new web3.eth.Contract(
+          CertificateContract.abi as AbiItem[],
+          CertificateContract.networks[netId].address
+        )
+        dispatch({ type: 'CERT_CONTRACT_CHANGE', certContract })
         dispatch({ type: 'USER_CONTRACT_CHANGE', userContract })
         setContractLoading(false)
       } catch (error) {

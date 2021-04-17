@@ -30,7 +30,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors)
   if (req.method === 'GET') {
     const { S3_BUCKET, accessKeyId, AWSSecretKey } = process.env
-    console.log({ S3_BUCKET, accessKeyId, AWSSecretKey })
     const s3 = new aws.S3({
       accessKeyId,
       secretAccessKey: AWSSecretKey,

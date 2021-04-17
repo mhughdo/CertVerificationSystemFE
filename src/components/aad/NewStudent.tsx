@@ -47,7 +47,6 @@ const NewStudent = () => {
         .send({ from: accountAddress })
 
       const nonce = await userContract.methods.getStudentNonce(studentID).call({ from: accountAddress })
-      console.log(nonce)
 
       await axios.post('/api/send-email', { to: email, studentID, nonce })
 

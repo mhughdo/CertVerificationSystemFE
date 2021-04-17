@@ -20,7 +20,9 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const activeLinkClasses = 'bg-gray-900 text-white'
   const linkClasses = 'text-gray-300 hover:bg-gray-700 hover:text-white'
   const getLinkClassName = (path) =>
-    `${asPath === path ? activeLinkClasses : linkClasses} px-3 py-2 rounded-md text-sm font-medium`
+    `${asPath === path ? activeLinkClasses : linkClasses}  ${
+      mainMenuOpen ? 'block' : ''
+    } px-3 py-2 rounded-md text-sm font-medium`
 
   const RectorNav = (
     <>
@@ -113,12 +115,11 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                               role='menu'
                               aria-orientation='vertical'
                               aria-labelledby='user-menu'>
-                              <a
-                                href='/'
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-                                role='menuitem'>
-                                Your Profile
-                              </a>
+                              <Link href='/profile'>
+                                <a className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
+                                  Your Profile
+                                </a>
+                              </Link>
                             </Transition>
                           </div>
                         </div>
@@ -174,33 +175,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                     id='mobile-menu'>
                     <div className='px-2 py-3 space-y-1 sm:px-3'>
                       {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                      <a href='/' className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'>
-                        Dashboard
-                      </a>
-
-                      <a
-                        href='/'
-                        className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                        Team
-                      </a>
-
-                      <a
-                        href='/'
-                        className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                        Projects
-                      </a>
-
-                      <a
-                        href='/'
-                        className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                        Calendar
-                      </a>
-
-                      <a
-                        href='/'
-                        className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-                        Reports
-                      </a>
+                      {roleToNav[user.role] || null}
                     </div>
                     <div className='pt-4 pb-3 border-t border-gray-700'>
                       <div className='flex items-center px-5'>
@@ -210,10 +185,6 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                             src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixqx=cII20c177f&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80'
                             alt=''
                           />
-                        </div>
-                        <div className='ml-3'>
-                          <div className='text-base font-medium leading-none text-white'>Tom Cook</div>
-                          <div className='text-sm font-medium leading-none text-gray-400'>tom@example.com</div>
                         </div>
                         {/* <button className='ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                         <span className='sr-only'>View notifications</span>
@@ -235,11 +206,13 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                       </button> */}
                       </div>
                       <div className='mt-3 px-2 space-y-1'>
-                        <a
-                          href='/'
-                          className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                          Your Profile
-                        </a>
+                        <Link href='/profile'>
+                          <a
+                            href='/'
+                            className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
+                            Your Profile
+                          </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

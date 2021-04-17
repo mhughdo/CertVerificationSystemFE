@@ -10,6 +10,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  Text,
 } from '@chakra-ui/react'
 import Layout from '@components/Layout'
 import { useState } from 'react'
@@ -83,7 +84,10 @@ const NewAADAccount = () => {
                   <FormLabel>Name</FormLabel>
                   <Input id='name' name='name' {...register('name')} type='text' required />
                 </FormControl>
-                <DatePicker onChange={(value) => setDate(value)} value={date} />
+                <Box>
+                  <Text mb={4}>Date of birth</Text>
+                  <DatePicker onChange={(value) => setDate(value)} value={date} />
+                </Box>
                 <FormControl id='phone_numner' isRequired isInvalid={Boolean(errors?.phone_number?.message)}>
                   <FormLabel>Phone Number</FormLabel>
                   <InputGroup>

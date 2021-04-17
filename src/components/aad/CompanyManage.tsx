@@ -19,7 +19,6 @@ const CompanyManage = () => {
 
         const normalizedCompanyList = companyList.map(normalizeWeb3Object)
         setCompanyList(normalizedCompanyList)
-        console.log(normalizedCompanyList)
       } catch (error) {
         console.log('Error getting account', error)
         toast({
