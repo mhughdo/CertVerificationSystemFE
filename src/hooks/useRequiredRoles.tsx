@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAppState } from '@store/appState'
 import { useToast } from '@chakra-ui/react'
@@ -8,8 +8,11 @@ function useRequiredRoles(roles: string[], redirectUrl = '/') {
   const { state } = useAppState()
   const { user } = state
   const toast = useToast()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!roles || roles?.length === 0) return
+
     if (!roles.includes(user.role)) {
       toast({
         title: 'Error.',
@@ -19,8 +22,12 @@ function useRequiredRoles(roles: string[], redirectUrl = '/') {
         position: 'top',
       })
       router.push(redirectUrl)
+    } else {
+      setLoading(false)
     }
   }, [user, router, redirectUrl, roles, toast])
+
+  return [loading]
 }
 
 export default useRequiredRoles

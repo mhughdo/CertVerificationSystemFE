@@ -8,7 +8,7 @@ import CertTable from '@components/rector/CertTable'
 
 const CertManage = () => {
   const { state } = useAppState()
-  const { web3, userContract, accountAddress } = state
+  const { web3, certContract, accountAddress } = state
   const [certList, setCertList] = useState<
     (Certificate & {
       studentID: string
@@ -23,14 +23,14 @@ const CertManage = () => {
   useEffect(() => {
     const getCertList = async () => {
       try {
-        // const res = await userContract.methods.createCertificate('17020783').send({ from: accountAddress })
+        // const res = await certContract.methods.createCertificate('17020783').send({ from: accountAddress })
         // console.log(res)
-        const certList = await userContract.methods.seeAllCerts().call({ from: accountAddress })
+        const certList = await certContract.methods.seeAllCerts().call({ from: accountAddress })
         const normalizedCertList = []
         let i = 0
         for (const c of certList) {
           const normalizedItem = normalizeWeb3Object(c)
-          const student = (await userContract.methods.getStudentByCert(i).call({ from: accountAddress })) as Student
+          const student = (await certContract.methods.getStudentByCert(i).call({ from: accountAddress })) as Student
           i += 1
           normalizedCertList.push({
             ...normalizedItem,
@@ -66,7 +66,12 @@ const CertManage = () => {
       </Text>
 
       <Box d='flex' justifyContent='flex-end' mb={8}>
-        <Button colorScheme='teal' size='md' onClick={() => Router.push('/certificate/new')}>
+        <Button
+          colorScheme='teal'
+          size='md'
+          onClick={() => {
+            return Router.push('/certificate/new')
+          }}>
           Create new certificate
         </Button>
       </Box>

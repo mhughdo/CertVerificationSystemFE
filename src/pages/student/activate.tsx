@@ -1,5 +1,5 @@
 import { useAppState } from '@store/appState'
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Box, Text, Stack, Skeleton, Button } from '@chakra-ui/react'
+import { Alert, AlertIcon, AlertTitle, AlertDescription, Box, Text, Stack, Skeleton } from '@chakra-ui/react'
 import Image from 'next/image'
 import Router from 'next/router'
 import { useEffect, useState } from 'react'
@@ -17,6 +17,10 @@ const ActivateStudent = () => {
       try {
         if (!user && studentID && nonce) {
           await userContract.methods.activeStudent(studentID, nonce).send({ from: accountAddress })
+
+          setTimeout(() => {
+            window.location.href = '/'
+          }, 500)
         }
       } catch (error) {
         console.log(error)
@@ -84,16 +88,6 @@ const ActivateStudent = () => {
                 <AlertIcon />
                 Account was activated successfully!
               </Alert>
-              <Box d='flex' justifyContent='center' mt={4}>
-                <Button
-                  colorScheme='teal'
-                  size='md'
-                  onClick={() => {
-                    window.location.href = '/'
-                  }}>
-                  Go to home page
-                </Button>
-              </Box>
             </>
           )}
 

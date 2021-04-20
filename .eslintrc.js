@@ -35,7 +35,7 @@ module.exports = {
         destructuring: 'all',
       },
     ],
-    'arrow-body-style': [2, 'as-needed'],
+    'arrow-body-style': [2, 'always'],
     'no-unused-expressions': [
       2,
       {

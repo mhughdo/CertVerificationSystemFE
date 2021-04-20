@@ -7,7 +7,7 @@ import Router from 'next/router'
 const NewCert = () => {
   const [studentID, setStudentID] = useState('')
   const { state } = useAppState()
-  const { accountAddress, userContract } = state
+  const { accountAddress, certContract } = state
   const [loading, setLoading] = useState(false)
   const toast = useToast()
 
@@ -26,7 +26,7 @@ const NewCert = () => {
       }
 
       setLoading(true)
-      await userContract.methods.createCertificate(studentID).send({ from: accountAddress })
+      await certContract.methods.createCertificate(studentID).send({ from: accountAddress })
 
       toast({
         title: 'Success',
@@ -56,7 +56,12 @@ const NewCert = () => {
       <Box d='flex' justifyContent='center'>
         <Box flex='1 1' bg='white' py='8' px={4} shadow='base' rounded='lg' maxW='40%'>
           <Text mb={4}>Student ID</Text>
-          <Input value={studentID} onChange={(e) => setStudentID(e.target.value)} />
+          <Input
+            value={studentID}
+            onChange={(e) => {
+              return setStudentID(e.target.value)
+            }}
+          />
 
           <Button colorScheme='teal' onClick={createCert} w='100%' mt={4} disabled={loading}>
             Create

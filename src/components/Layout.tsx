@@ -19,10 +19,11 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
 
   const activeLinkClasses = 'bg-gray-900 text-white'
   const linkClasses = 'text-gray-300 hover:bg-gray-700 hover:text-white'
-  const getLinkClassName = (path) =>
-    `${asPath === path ? activeLinkClasses : linkClasses}  ${
+  const getLinkClassName = (path) => {
+    return `${asPath === path ? activeLinkClasses : linkClasses}  ${
       mainMenuOpen ? 'block' : ''
     } px-3 py-2 rounded-md text-sm font-medium`
+  }
 
   const RectorNav = (
     <>
@@ -71,7 +72,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   return (
     <>
       <div className=''>
-        <div className='bg-gray-100 h-screen'>
+        <div className='bg-gray-100 min-h-screen' style={{ height: 'fit-content' }}>
           <div>
             <div className={`bg-gray-800 ${pageTitle ? 'pb-32' : 'pb-52'}`}>
               <nav className='bg-gray-800'>
@@ -105,7 +106,9 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                                 id='user-menu'
                                 aria-haspopup='true'
                                 aria-expanded={!!profileMenuOpen}
-                                onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
+                                onClick={() => {
+                                  return setProfileMenuOpen(!profileMenuOpen)
+                                }}>
                                 <span className='sr-only'>Open user menu</span>
                                 <img
                                   className='h-8 w-8 rounded-full'
@@ -143,7 +146,9 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                           className='bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                           aria-controls='mobile-menu'
                           aria-expanded={!!mainMenuOpen}
-                          onClick={() => setMainMenuOpen(!mainMenuOpen)}>
+                          onClick={() => {
+                            return setMainMenuOpen(!mainMenuOpen)
+                          }}>
                           <span className='sr-only'>Open main menu</span>
 
                           <svg

@@ -1,7 +1,8 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-extraneous-dependencies */
 import type { AppProps /* , AppContext */ } from 'next/app'
-import 'tailwindcss/tailwind.css'
+// import 'tailwindcss/tailwind.css'
+import '../styles/global.css'
 import { Chakra } from '@components/Chakra'
 import { useState, useEffect } from 'react'
 import Loading from '@components/Loading'
@@ -9,7 +10,8 @@ import Web3Type from 'web3/types/index'
 import { getWeb3 } from '@utils/network'
 import Entry from '@components/Entry'
 import { AppProvider, Role, useAppState, User } from '@store/appState'
-import UserContract from '@contracts/Certificate.json'
+import UserContract from '@contracts/User.json'
+import CertContract from '@contracts/Certificate.json'
 import { AbiItem } from 'web3-utils/types/index'
 import { useToast } from '@chakra-ui/react'
 
@@ -27,7 +29,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
   const [err, setErr] = useState('')
   const toast = useToast()
   const { state, dispatch } = useAppState()
-  const { web3, accountAddress, userContract, user } = state
+  const { web3, accountAddress, userContract, user, certContract } = state
   const loading = initLoading || accountLoading || constractLoading || userLoading
   const nonRequiredAuthRoutes = ['/register', '/student/activate']
   const { pathname } = router
@@ -85,13 +87,13 @@ function SubApp({ Component, pageProps, router }: AppProps) {
 
   useEffect(() => {
     const retrieveContract = async () => {
-      if (!accountAddress || !web3 || userContract) {
+      if (!accountAddress || !web3 || (userContract && certContract)) {
         return
       }
       setContractLoading(true)
       try {
         const netId = await web3.eth.net.getId()
-        const networkAddress = UserContract.networks[netId]?.address
+        const networkAddress = UserContract.networks[netId]?.address && CertContract.networks[netId]?.address
         if (!networkAddress) {
           toast({
             title: 'Error.',
@@ -103,7 +105,9 @@ function SubApp({ Component, pageProps, router }: AppProps) {
           return
         }
         const userContract = new web3.eth.Contract(UserContract.abi as AbiItem[], UserContract.networks[netId].address)
+        const certContract = new web3.eth.Contract(CertContract.abi as AbiItem[], CertContract.networks[netId].address)
 
+        dispatch({ type: 'CERT_CONTRACT_CHANGE', certContract })
         dispatch({ type: 'USER_CONTRACT_CHANGE', userContract })
         setContractLoading(false)
       } catch (error) {
@@ -126,7 +130,9 @@ function SubApp({ Component, pageProps, router }: AppProps) {
       setUserLoading(true)
       const users = await userContract.methods.getCurrentUser().call({ from: accountAddress })
       const [, validUser] =
-        (Object.entries(users).find(([, u]: [k: string, u: User]) => !!u.name) as [string, undefined | any]) || []
+        (Object.entries(users).find(([, u]: [k: string, u: User]) => {
+          return !!u.name
+        }) as [string, undefined | any]) || []
       if (!validUser) {
         dispatch({ type: 'USER_CHANGE', user: null })
         setUserLoading(false)
@@ -153,9 +159,12 @@ function SubApp({ Component, pageProps, router }: AppProps) {
   }, [userContract, accountAddress])
 
   useEffect(() => {
-    window?.ethereum?.on('chainChanged', (_chainId: number) => window.location.reload())
+    window?.ethereum?.on('chainChanged', (_chainId: number) => {
+      return window.location.reload()
+    })
     window?.ethereum?.on('accountsChanged', (accounts: string[]) => {
       setErr('')
+      router.push('/')
       dispatch({ type: 'USER_CHANGE', user: null })
       dispatch({ type: 'ADDRESS_CHANGE', accountAddress: accounts[0] })
     })

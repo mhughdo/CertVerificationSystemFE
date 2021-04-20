@@ -5,10 +5,10 @@ import {
   useToast,
   Stack,
   FormControl,
-  FormErrorMessage,
   Container,
   FormLabel,
   Input,
+  FormErrorMessage,
   InputGroup,
   Text,
 } from '@chakra-ui/react'
@@ -86,7 +86,12 @@ const NewAADAccount = () => {
                 </FormControl>
                 <Box>
                   <Text mb={4}>Date of birth</Text>
-                  <DatePicker onChange={(value) => setDate(value)} value={date} />
+                  <DatePicker
+                    onChange={(value) => {
+                      return setDate(value)
+                    }}
+                    value={date}
+                  />
                 </Box>
                 <FormControl id='phone_numner' isRequired isInvalid={Boolean(errors?.phone_number?.message)}>
                   <FormLabel>Phone Number</FormLabel>

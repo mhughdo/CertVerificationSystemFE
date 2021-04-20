@@ -3,7 +3,11 @@ import Editor from 'rich-markdown-editor'
 import { Box, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 
-const MarkdownEditor: FC<{ initValue?: string; setValue: (value: string) => void }> = ({ initValue, setValue }) => {
+type ReadOnly = { initValue: string; readOnly: true; setValue?: (value: string) => void }
+
+type Editable = { initValue?: string; readOnly?: false; setValue: (value: string) => void }
+
+const MarkdownEditor: FC<ReadOnly | Editable> = ({ initValue, setValue, readOnly = false }) => {
   const toast = useToast()
 
   const uploadFile = async (signedRequest: string, file: File) => {
@@ -63,10 +67,14 @@ const MarkdownEditor: FC<{ initValue?: string; setValue: (value: string) => void
         },
       }}>
       <Editor
-        defaultValue='### This is job description'
-        {...(initValue && { value: initValue })}
-        uploadImage={async (file: File) => signRequest(file)}
-        onChange={(oc) => setValue(oc())}
+        readOnly={readOnly}
+        {...(!!initValue && { defaultValue: initValue })}
+        uploadImage={async (file: File) => {
+          return signRequest(file)
+        }}
+        onChange={(oc) => {
+          return setValue(oc())
+        }}
       />
     </Box>
   )

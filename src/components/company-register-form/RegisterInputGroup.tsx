@@ -7,7 +7,7 @@ import { AnimatePresence } from 'framer-motion'
 
 export const RegisterInputGroup = () => {
   const signUpRef = useRef(null)
-  const [markdownValue, setMarkDownValue] = useState('### This is job description')
+  const [markdownValue, setMarkDownValue] = useState('### This is company description')
   const [signUpSuccess, setSignUpSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const { state } = useAppState()
@@ -21,10 +21,7 @@ export const RegisterInputGroup = () => {
       // console.log(await userContract.methods.getAllCompany().call({ from: accountAddress }))
       const form = signUpRef.current
       const companyName = form.company_name.value
-      const description = form.description.value
-      const res = await userContract.methods
-        .createCompany(companyName, description, markdownValue)
-        .send({ from: accountAddress })
+      const res = await userContract.methods.createCompany(companyName, markdownValue).send({ from: accountAddress })
 
       if (res) {
         setSignUpSuccess(true)
@@ -52,14 +49,14 @@ export const RegisterInputGroup = () => {
               <FormLabel>Company name</FormLabel>
               <Input id='company_name' name='company_name' type='text' required />
             </FormControl>
-            <FormControl id='description'>
-              <FormLabel>Description</FormLabel>
-              <Input id='description' name='description' type='text' required />
-            </FormControl>
             <Box>
-              <Text mb={2}>Job description</Text>
+              <Text mb={2}>Description</Text>
               <MarkdownEditor setValue={setMarkDownValue} />
             </Box>
+            {/* <Box>
+              <Text mb={2}>Job description</Text>
+              <MarkdownEditor setValue={setMarkDownValue} />
+            </Box> */}
             <Button type='submit' colorScheme='blue' size='lg' fontSize='md' disabled={loading}>
               Sign up
             </Button>

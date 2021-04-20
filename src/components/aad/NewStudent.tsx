@@ -56,6 +56,13 @@ const NewStudent = () => {
 
       const nonce = await userContract.methods.getStudentNonce(studentID).call({ from: accountAddress })
 
+      toast({
+        title: 'Info',
+        description: 'Sending email to student...',
+        status: 'info',
+        duration: 1500,
+        position: 'top',
+      })
       await axios.post('/api/send-email', { to: email, studentID, nonce })
 
       toast({
@@ -82,7 +89,7 @@ const NewStudent = () => {
   }
 
   return (
-    <Layout pageTitle='New Academic Affairs Accounts'>
+    <Layout pageTitle='Create new student account'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
@@ -116,7 +123,12 @@ const NewStudent = () => {
                 </FormControl>
                 <Box>
                   <Text mb={4}>Date of birth</Text>
-                  <DatePicker onChange={(value) => setDate(value)} value={date} />
+                  <DatePicker
+                    onChange={(value) => {
+                      return setDate(value)
+                    }}
+                    value={date}
+                  />
                 </Box>
                 <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
                   <FormLabel>Phone Number</FormLabel>
@@ -156,7 +168,7 @@ const NewStudent = () => {
                   </Select>
                 </FormControl>
 
-                <Button type='submit' colorScheme='blue' size='lg' fontSize='md' disabled={loading}>
+                <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
                   Create
                 </Button>
               </Stack>

@@ -66,6 +66,7 @@ type Action =
   | { type: 'ADDRESS_CHANGE'; accountAddress: string }
   | { type: 'USER_CHANGE'; user: User }
   | { type: 'WEB3_CHANGE'; web3: Web3Type }
+  | { type: 'CERT_CONTRACT_CHANGE'; certContract: Contract }
   | { type: 'USER_CONTRACT_CHANGE'; userContract: Contract }
 type Dispatch = (action: Action) => void
 type AppProviderProps = { children: ReactNode }
@@ -74,6 +75,7 @@ interface AppState {
   user: User
   web3: Web3Type
   userContract: Contract
+  certContract: Contract
 }
 
 function appReducer(state: AppState, action: Action) {
@@ -93,6 +95,12 @@ function appReducer(state: AppState, action: Action) {
       return {
         ...state,
         web3: action.web3,
+      }
+    }
+    case 'CERT_CONTRACT_CHANGE': {
+      return {
+        ...state,
+        certContract: action.certContract,
       }
     }
     case 'USER_CONTRACT_CHANGE': {

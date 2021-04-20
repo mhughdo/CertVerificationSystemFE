@@ -1,6 +1,26 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable react/destructuring-assignment */
 import { useAppState, Student, Rector, Company, AADUser, Role } from '@store/appState'
+import CompanyProfile from '@components/CompanyProfile'
+import Link from 'next/link'
 
+const UpdateLink = () => {
+  return (
+    <Link href='/profile/update'>
+      <a className='inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+        <svg
+          className='-ml-1 mr-2 h-5 w-5 text-gray-500'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 20 20'
+          fill='currentColor'
+          aria-hidden='true'>
+          <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z' />
+        </svg>
+        Update
+      </a>
+    </Link>
+  )
+}
 const StudentProfile = ({ student }: { student: Student }) => {
   const { id, name, email, date, phone, major, cpa, qualifiedForGraduation } = student
 
@@ -11,9 +31,12 @@ const StudentProfile = ({ student }: { student: Student }) => {
       <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-4xl mx-auto'>
           <div>
-            <div>
-              <h3 className='text-lg leading-6 font-medium text-gray-900'>Student Information</h3>
-              <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+            <div className='flex justify-between items-center'>
+              <div>
+                <h3 className='text-lg leading-6 font-medium text-gray-900'>Student Information</h3>
+                <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+              </div>
+              <UpdateLink />
             </div>
             <div className='mt-5 border-t border-gray-200'>
               <dl className='sm:divide-y sm:divide-gray-200'>
@@ -101,41 +124,6 @@ const RectorProfile = ({ rector }: { rector: Rector }) => {
   )
 }
 
-const CompanyProfile = ({ company }: { company: Company }) => {
-  const { name, description, jobInfo } = company
-
-  return (
-    <div className='bg-white'>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl mx-auto'>
-          <div>
-            <div>
-              <h3 className='text-lg leading-6 font-medium text-gray-900'>Company Information</h3>
-              <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
-            </div>
-            <div className='mt-5 border-t border-gray-200'>
-              <dl className='sm:divide-y sm:divide-gray-200'>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Name</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Description</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{description}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Job description</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{jobInfo}</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const AADUserProfile = ({ account }: { account: AADUser }) => {
   const { name, date, phone } = account
 
@@ -144,11 +132,12 @@ const AADUserProfile = ({ account }: { account: AADUser }) => {
       <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-4xl mx-auto'>
           <div>
-            <div>
-              <h3 className='text-lg leading-6 font-medium text-gray-900'>
-                Office of Academic Department User Information
-              </h3>
-              <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+            <div className='flex justify-between items-center'>
+              <div>
+                <h3 className='text-lg leading-6 font-medium text-gray-900'>Academic Department User Information</h3>
+                <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+              </div>
+              <UpdateLink />
             </div>
             <div className='mt-5 border-t border-gray-200'>
               <dl className='sm:divide-y sm:divide-gray-200'>

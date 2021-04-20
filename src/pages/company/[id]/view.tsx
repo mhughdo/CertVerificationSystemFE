@@ -1,3 +1,12 @@
-const view = () => <div>company view</div>
+import CompanyProfile from '@components/CompanyProfile'
+import Layout from '@components/Layout'
 
-export default view
+const CompanyViewPage = () => {
+  return (
+    <Layout>
+      <CompanyProfile />
+    </Layout>
+  )
+}
+
+export default CompanyViewPage

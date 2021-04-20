@@ -6,14 +6,15 @@ import Image from 'next/image'
 
 const MyCertificate = () => {
   const { state } = useAppState()
-  const { userContract, accountAddress, user } = state
+  const { certContract, accountAddress, user } = state
   const toast = useToast()
   const [cert, setCert] = useState<Certificate>()
   const [imgUrl, setImgUrl] = useState('')
 
   const getMyCertificate = async () => {
     try {
-      const cert = (await userContract.methods.seeMyCertificate().call({ from: accountAddress })) as Certificate[]
+      const cert = (await certContract.methods.seeMyCertificate().call({ from: accountAddress })) as Certificate[]
+      if (!cert?.length) return
       const normalized = normalizeWeb3Object(cert[0]) as Certificate
 
       if (cert) setCert(normalized)
@@ -49,7 +50,7 @@ const MyCertificate = () => {
 
   const changeCertVisibility = async () => {
     try {
-      await userContract.methods.changeCertVisibility(0).send({ from: accountAddress })
+      await certContract.methods.changeCertVisibility(0).send({ from: accountAddress })
       toast({
         title: 'Success',
         description: 'Cert visibility was successfully changed!',
@@ -71,7 +72,7 @@ const MyCertificate = () => {
     }
   }
 
-  if (cert?.signed === false) {
+  if (!cert || cert.signed === false) {
     return (
       <Box textAlign='center'>
         <Text fontSize='2xl'>Your certificate hasn't been signed or created yet</Text>
