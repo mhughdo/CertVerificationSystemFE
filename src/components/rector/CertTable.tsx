@@ -39,22 +39,6 @@ const CertTable: FC<{
       try {
         setLoading(true)
         await certContract.methods.signCertificate(id).send({ from: accountAddress })
-
-        toast({
-          title: 'Info',
-          description: 'Generating certificate image...',
-          status: 'info',
-          duration: 1000,
-          position: 'top',
-        })
-        await axios.post('/api/generate-cert', {
-          major: certList[id].studentMajor,
-          grade: certList[id].grade,
-          name: certList[id].studentName,
-          studentID: certList[id].studentID,
-          dob: certList[id].studentDOB,
-        })
-
         const newCertList = [...certList]
         const signedItem = newCertList[id]
         signedItem.signed = true

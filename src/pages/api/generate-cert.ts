@@ -99,8 +99,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         height: 989,
         deviceScaleFactor: 1,
       })
-      await page.goto(URL, { waitUntil: 'networkidle0' })
-      // await waiit(1000)
+      await page.goto(URL, { waitUntil: 'networkidle2' })
+      await waiit(1000)
 
       const imageBuffer = await page.screenshot()
 

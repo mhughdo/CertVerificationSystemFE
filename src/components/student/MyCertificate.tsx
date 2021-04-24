@@ -3,13 +3,13 @@ import { useAppState, Certificate, Student } from '@store/appState'
 import { useToast, Box, Text, Button } from '@chakra-ui/react'
 import { normalizeWeb3Object } from '@utils/index'
 import Image from 'next/image'
+import CertRenderer from '@components/CertRenderer'
 
 const MyCertificate = () => {
   const { state } = useAppState()
   const { certContract, accountAddress, user } = state
   const toast = useToast()
   const [cert, setCert] = useState<Certificate>()
-  const [imgUrl, setImgUrl] = useState('')
 
   const getMyCertificate = async () => {
     try {
@@ -32,21 +32,6 @@ const MyCertificate = () => {
   useEffect(() => {
     getMyCertificate()
   }, [])
-
-  useEffect(() => {
-    const setUrl = () => {
-      if (cert && cert.signed === true) {
-        const { NEXT_PUBLIC_S3_BUCKET } = process.env
-        const region = 'ap-southeast-1'
-        const fileName = `grad_cert_${(user as Student).id}.jpg`
-        const fileUrl = `https://${NEXT_PUBLIC_S3_BUCKET}.s3-${region}.amazonaws.com/${fileName}`
-        console.log(fileUrl)
-        setImgUrl(fileUrl)
-      }
-    }
-
-    setUrl()
-  }, [cert])
 
   const changeCertVisibility = async () => {
     try {
@@ -82,7 +67,7 @@ const MyCertificate = () => {
   }
 
   return (
-    <Box>
+    <Box minW='1200px'>
       {cert?.visible === true && (
         <Box d='flex' alignItems='center' mb={8} justifyContent='center'>
           <Text>Your certificate is visible to all companies.</Text>
@@ -99,8 +84,8 @@ const MyCertificate = () => {
           </Button>
         </Box>
       )}
-      <Box d='flex' justifyContent='center'>
-        {imgUrl && <Image src={imgUrl} width='1024px' height='720px' />}
+      <Box>
+        <CertRenderer />
       </Box>
     </Box>
   )
