@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { useAppState, Company } from '@store/appState'
 import { FC } from 'react'
+import Link from 'next/link'
 
 const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]) => void }> = ({
   companyList,
@@ -25,42 +26,44 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
   const { state } = useAppState()
   const { userContract, accountAddress } = state
 
-  const activateCompanyAccount = (id: number) => async () => {
-    try {
-      await userContract.methods.approveCompany(id).send({ from: accountAddress })
+  const activateCompanyAccount = (id: number) => {
+    return async () => {
+      try {
+        await userContract.methods.approveCompany(id).send({ from: accountAddress })
 
-      const newAccountList = [...companyList]
-      const activatedAcc = newAccountList[id]
-      activatedAcc.isActive = true
-      newAccountList[id] = activatedAcc
+        const newAccountList = [...companyList]
+        const activatedAcc = newAccountList[id]
+        activatedAcc.isActive = true
+        newAccountList[id] = activatedAcc
 
-      setCompanyList(newAccountList)
-      toast({
-        title: 'Success',
-        description: 'Account was successfully activated!',
-        status: 'success',
-        duration: 2000,
-        position: 'top',
-      })
-    } catch (error) {
-      console.log('Error getting account', error)
-      if (error?.code === 4001) {
+        setCompanyList(newAccountList)
         toast({
-          title: 'Info',
-          description: 'Canceled account activation!',
-          status: 'info',
+          title: 'Success',
+          description: 'Account was successfully activated!',
+          status: 'success',
           duration: 2000,
           position: 'top',
         })
-        return
+      } catch (error) {
+        console.log('Error getting account', error)
+        if (error?.code === 4001) {
+          toast({
+            title: 'Info',
+            description: 'Canceled account activation!',
+            status: 'info',
+            duration: 2000,
+            position: 'top',
+          })
+          return
+        }
+        toast({
+          title: 'Error.',
+          description: 'Error occured while activating account!',
+          status: 'error',
+          duration: 3000,
+          position: 'top',
+        })
       }
-      toast({
-        title: 'Error.',
-        description: 'Error occured while activating account!',
-        status: 'error',
-        duration: 3000,
-        position: 'top',
-      })
     }
   }
 
@@ -92,52 +95,60 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200' data-todo-x-max='1'>
                       {companyList.length ? (
-                        companyList.map((account, index) => (
-                          <tr key={index}>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                              {account.name}
-                            </td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.description}</td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                              {account.isActive ? (
-                                <Tag colorScheme='green'>Active</Tag>
-                              ) : (
-                                <Tag colorScheme='red'>Unactivated</Tag>
-                              )}
-                            </td>
-                            <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-                              <Popover isLazy>
-                                {({ isOpen, onClose }) => (
-                                  <>
-                                    <PopoverTrigger>
-                                      <Button disabled={account.isActive}>Activate</Button>
-                                    </PopoverTrigger>
-                                    <Portal>
-                                      <PopoverContent>
-                                        <PopoverArrow />
-                                        <PopoverCloseButton />
-                                        <PopoverHeader>Confirmation!</PopoverHeader>
-                                        <PopoverBody>Are you sure you want to activate this account?</PopoverBody>
-                                        <PopoverFooter d='flex' justifyContent='flex-end'>
-                                          <ButtonGroup size='sm'>
-                                            <Button
-                                              colorScheme='red'
-                                              onClick={() => {
-                                                activateCompanyAccount(index)()
-                                                onClose()
-                                              }}>
-                                              Activate
-                                            </Button>
-                                          </ButtonGroup>
-                                        </PopoverFooter>
-                                      </PopoverContent>
-                                    </Portal>
-                                  </>
+                        companyList.map((account, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600'>
+                                <Link href={`/company/${index}/view`}>
+                                  <a>{account.name}</a>
+                                </Link>
+                              </td>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                                {account.description}
+                              </td>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                                {account.isActive ? (
+                                  <Tag colorScheme='green'>Active</Tag>
+                                ) : (
+                                  <Tag colorScheme='red'>Unactivated</Tag>
                                 )}
-                              </Popover>
-                            </td>
-                          </tr>
-                        ))
+                              </td>
+                              <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+                                <Popover isLazy>
+                                  {({ isOpen, onClose }) => {
+                                    return (
+                                      <>
+                                        <PopoverTrigger>
+                                          <Button disabled={account.isActive}>Activate</Button>
+                                        </PopoverTrigger>
+                                        <Portal>
+                                          <PopoverContent>
+                                            <PopoverArrow />
+                                            <PopoverCloseButton />
+                                            <PopoverHeader>Confirmation!</PopoverHeader>
+                                            <PopoverBody>Are you sure you want to activate this account?</PopoverBody>
+                                            <PopoverFooter d='flex' justifyContent='flex-end'>
+                                              <ButtonGroup size='sm'>
+                                                <Button
+                                                  colorScheme='red'
+                                                  onClick={() => {
+                                                    activateCompanyAccount(index)()
+                                                    onClose()
+                                                  }}>
+                                                  Activate
+                                                </Button>
+                                              </ButtonGroup>
+                                            </PopoverFooter>
+                                          </PopoverContent>
+                                        </Portal>
+                                      </>
+                                    )
+                                  }}
+                                </Popover>
+                              </td>
+                            </tr>
+                          )
+                        })
                       ) : (
                         <tr>
                           <td className='p-4'>No data</td>

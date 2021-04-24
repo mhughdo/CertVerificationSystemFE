@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useToast } from '@chakra-ui/react'
 import { normalizeWeb3Object } from '@utils/index'
 import ContentLoadingSkeleton from '@components/ContentLoadingSkeleton'
+import Layout from '@components/Layout'
 
 const UpdateLink = () => {
   return (
@@ -41,7 +42,7 @@ const CompanyProfile = ({ company }: { company?: Company }) => {
       if (company) return
       setLoading(true)
       try {
-        const company = await userContract.methods.getCompany(id).call({ from: accountAddress })
+        const company = await userContract.methods.getCompanybyId(id).call({ from: accountAddress })
 
         if (company?.name) {
           setCompanyDetails(normalizeWeb3Object(company) as Company)
@@ -68,41 +69,43 @@ const CompanyProfile = ({ company }: { company?: Company }) => {
   }
 
   return (
-    <div className='bg-white'>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl mx-auto'>
-          <div>
-            <div className='flex justify-between items-center'>
-              <div>
-                <h3 className='text-lg leading-6 font-medium text-gray-900'>Company Information</h3>
-                <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+    <Layout>
+      <div className='bg-white'>
+        <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-4xl mx-auto'>
+            <div>
+              <div className='flex justify-between items-center'>
+                <div>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Company Information</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                </div>
+                {user.role === Role.COMPANY && companyDetails?.name === user?.name && <UpdateLink />}
               </div>
-              {user.role === Role.COMPANY && companyDetails?.name === user?.name && <UpdateLink />}
-            </div>
-            <div className='mt-5 border-t border-gray-200'>
-              <dl className='sm:divide-y sm:divide-gray-200'>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Name</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{companyDetails?.name}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Description</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
-                    <MarkdownEditor initValue={companyDetails?.description} readOnly />
-                  </dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Job description</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
-                    <MarkdownEditor initValue={companyDetails?.jobInfo} readOnly />
-                  </dd>
-                </div>
-              </dl>
+              <div className='mt-5 border-t border-gray-200'>
+                <dl className='sm:divide-y sm:divide-gray-200'>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{companyDetails?.name}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Description</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+                      <MarkdownEditor initValue={companyDetails?.description} readOnly />
+                    </dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Job description</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+                      <MarkdownEditor initValue={companyDetails?.jobInfo} readOnly />
+                    </dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

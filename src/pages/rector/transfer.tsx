@@ -7,6 +7,7 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import DatePicker from '@components/DatePicker'
 import { formatDate } from '@utils/index'
+import ContentLoadingSkeleton from '@components/ContentLoadingSkeleton'
 
 type FormData = {
   address: string
@@ -28,7 +29,7 @@ const RectorTransfer = () => {
   } = useForm<FormData>()
   const [loading, setLoading] = useState(false)
 
-  useRequiredRoles([Role.RECTOR])
+  const [requiredRolesLoading] = useRequiredRoles([Role.RECTOR])
 
   useEffect(() => {}, [])
 
@@ -92,6 +93,10 @@ const RectorTransfer = () => {
     }
   }
 
+  if (requiredRolesLoading) {
+    return <ContentLoadingSkeleton />
+  }
+
   return (
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -139,7 +144,12 @@ const RectorTransfer = () => {
               </FormControl>
               <Box>
                 <Text mb={4}>Date of birth</Text>
-                <DatePicker onChange={(value) => setDate(value)} value={date} />
+                <DatePicker
+                  onChange={(value) => {
+                    return setDate(value)
+                  }}
+                  value={date}
+                />
               </Box>
               <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
                 <FormLabel>Phone number</FormLabel>

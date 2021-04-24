@@ -35,7 +35,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
         <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
       </Link>
       <Link href='/rector/transfer'>
-        <a className={getLinkClassName('/certificate/manage')}>Rector Transfer</a>
+        <a className={getLinkClassName('/rector/transfer')}>Rector Transfer</a>
       </Link>
     </>
   )
@@ -60,6 +60,17 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
       <Link href='/'>
         <a className={getLinkClassName('/')}>My Certificate</a>
       </Link>
+      <Link href='/company/list'>
+        <a className={getLinkClassName('/company/list')}>Company</a>
+      </Link>
+    </>
+  )
+
+  const CompanyNav = (
+    <>
+      <Link href='/'>
+        <a className={getLinkClassName('/')}>Certificate Search</a>
+      </Link>
     </>
   )
 
@@ -67,6 +78,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
     [Role.RECTOR]: RectorNav,
     [Role.AADEPARTMENT]: AADNav,
     [Role.STUDENT]: StudentNav,
+    [Role.COMPANY]: CompanyNav,
   }
 
   return (

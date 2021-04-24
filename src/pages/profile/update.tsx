@@ -13,13 +13,133 @@ import {
   InputGroup,
 } from '@chakra-ui/react'
 import MarkdownEditor from '@components/MarkdownEditor'
-import { useAppState, Role, Company, AADUser, Student } from '@store/appState'
-import { useState } from 'react'
+import { useAppState, Role, Company, AADUser, Student, Rector } from '@store/appState'
+import { useState, useEffect } from 'react'
 import Layout from '@components/Layout'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import DatePicker from '@components/DatePicker'
 import { formatDate } from '@utils/index'
+import useRequiredRoles from '@hooks/useRequiredRoles'
+import ContentLoadingSkeleton from '@components/ContentLoadingSkeleton'
+
+const RectorProfileUpdate = () => {
+  type FormData = {
+    name: string
+    phone: string
+    term: string
+  }
+
+  const { state, dispatch } = useAppState()
+  const { user, accountAddress, userContract } = state
+  const { name, date: rectorDate, phone, term } = user as Rector
+  const toast = useToast()
+  const dateArr = rectorDate
+    .split('/')
+    .reverse()
+    .map((item, index) => {
+      if (index === 1) {
+        return Number(item) - 1
+      }
+
+      return Number(item)
+    }) as [number, number, number]
+  const [date, setDate] = useState(new Date(...dateArr))
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
+  const [loading, setLoading] = useState(false)
+
+  const [requiredRolesLoading] = useRequiredRoles([Role.RECTOR])
+
+  const onSubmit: SubmitHandler<FormData> = async (formData) => {
+    try {
+      setLoading(true)
+      const { name, phone, term } = formData
+      const formattedDate = formatDate(date)
+
+      await userContract.methods.updateCurrentRector(name, formattedDate, phone, term).send({ from: accountAddress })
+
+      toast({
+        title: 'Success',
+        description: 'Rector was successfully transfered!',
+        status: 'success',
+        duration: 2000,
+        position: 'top',
+      })
+
+      dispatch({ type: 'USER_CHANGE', user: { ...user, name, phone, term, date: formattedDate } })
+      Router.push('/profile')
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+      if (error?.code === 4001) return
+      toast({
+        title: 'Error.',
+        description: 'Error occured while transfering rector!',
+        status: 'error',
+        duration: 3000,
+        position: 'top',
+      })
+    }
+  }
+
+  if (requiredRolesLoading) {
+    return <ContentLoadingSkeleton />
+  }
+
+  return (
+    <Layout>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box d='flex' alignItems='center' justifyContent='center'>
+          <Box flex='1 1' bg='white' py='8' px={4} shadow='base' rounded='lg' maxW='40%'>
+            <Stack spacing='6'>
+              <FormControl id='name' isRequired>
+                <FormLabel>Rector Name</FormLabel>
+                <Input defaultValue={name} {...register('name')} id='name' name='name' type='text' required />
+              </FormControl>
+              <Box>
+                <Text mb={4}>Date of birth</Text>
+                <DatePicker
+                  onChange={(value) => {
+                    return setDate(value)
+                  }}
+                  value={date}
+                />
+              </Box>
+              <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
+                <FormLabel>Phone number</FormLabel>
+                <Input
+                  id='phone'
+                  name='phone'
+                  type='text'
+                  defaultValue={phone}
+                  {...register('phone', {
+                    pattern: {
+                      value: /^\d{9,11}$/,
+                      message: 'Phone number is invalid!',
+                    },
+                  })}
+                  required
+                />
+                <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id='term' isRequired>
+                <FormLabel>Term</FormLabel>
+                <Input defaultValue={term} {...register('term')} id='term' name='term' type='text' required />
+              </FormControl>
+            </Stack>
+            <Button colorScheme='teal' mt={8} type='submit' disabled={loading} w='100%'>
+              Update
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </Layout>
+  )
+}
 
 const StudentProfileUpdate = () => {
   type FormData = {
@@ -138,7 +258,15 @@ const AADUserProfileUpdate = () => {
   const { userContract, accountAddress, user } = state
   const { name, date: AADUserDate, phone } = user as AADUser
 
-  const dateArr = AADUserDate.split('/').reverse().map(Number) as [number, number, number]
+  const dateArr = AADUserDate.split('/')
+    .reverse()
+    .map((item, index) => {
+      if (index === 1) {
+        return Number(item) - 1
+      }
+
+      return Number(item)
+    }) as [number, number, number]
   const [date, setDate] = useState(new Date(...dateArr))
   const [loading, setLoading] = useState(false)
   const {
@@ -318,6 +446,7 @@ export const ProfileUpdate = () => {
     [Role.AADEPARTMENT]: <AADUserProfileUpdate />,
     [Role.COMPANY]: <CompanyProfileUpdate />,
     [Role.STUDENT]: <StudentProfileUpdate />,
+    [Role.RECTOR]: <RectorProfileUpdate />,
   }
   const { state } = useAppState()
   const { user } = state

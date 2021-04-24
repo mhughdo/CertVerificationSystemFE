@@ -3,6 +3,7 @@
 import { useAppState, Student, Rector, Company, AADUser, Role } from '@store/appState'
 import CompanyProfile from '@components/CompanyProfile'
 import Link from 'next/link'
+import Layout from '@components/Layout'
 
 const UpdateLink = () => {
   return (
@@ -27,61 +28,63 @@ const StudentProfile = ({ student }: { student: Student }) => {
   const studentClass = student.class
 
   return (
-    <div className='bg-white'>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl mx-auto'>
-          <div>
-            <div className='flex justify-between items-center'>
-              <div>
-                <h3 className='text-lg leading-6 font-medium text-gray-900'>Student Information</h3>
-                <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+    <Layout>
+      <div className='bg-white'>
+        <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-4xl mx-auto'>
+            <div>
+              <div className='flex justify-between items-center'>
+                <div>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Student Information</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                </div>
+                <UpdateLink />
               </div>
-              <UpdateLink />
-            </div>
-            <div className='mt-5 border-t border-gray-200'>
-              <dl className='sm:divide-y sm:divide-gray-200'>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Student ID</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{id}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Name</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Email address</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{email}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Phone</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Class</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{studentClass}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Major</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{major}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>CPA</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{cpa}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Qualified For Graduation</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{`${qualifiedForGraduation}`}</dd>
-                </div>
-              </dl>
+              <div className='mt-5 border-t border-gray-200'>
+                <dl className='sm:divide-y sm:divide-gray-200'>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Student ID</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{id}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Email address</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{email}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Class</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{studentClass}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Major</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{major}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>CPA</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{cpa}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Qualified For Graduation</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{`${qualifiedForGraduation}`}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 
@@ -89,38 +92,43 @@ const RectorProfile = ({ rector }: { rector: Rector }) => {
   const { name, date, phone, term } = rector
 
   return (
-    <div className='bg-white'>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl mx-auto'>
-          <div>
+    <Layout>
+      <div className='bg-white'>
+        <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-4xl mx-auto'>
             <div>
-              <h3 className='text-lg leading-6 font-medium text-gray-900'>Rector Information</h3>
-              <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
-            </div>
-            <div className='mt-5 border-t border-gray-200'>
-              <dl className='sm:divide-y sm:divide-gray-200'>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Name</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
+              <div className='flex justify-between items-center'>
+                <div>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Rector Information</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
                 </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Phone</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>term</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{term}</dd>
-                </div>
-              </dl>
+                <UpdateLink />
+              </div>
+              <div className='mt-5 border-t border-gray-200'>
+                <dl className='sm:divide-y sm:divide-gray-200'>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>term</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{term}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 
@@ -128,37 +136,39 @@ const AADUserProfile = ({ account }: { account: AADUser }) => {
   const { name, date, phone } = account
 
   return (
-    <div className='bg-white'>
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-4xl mx-auto'>
-          <div>
-            <div className='flex justify-between items-center'>
-              <div>
-                <h3 className='text-lg leading-6 font-medium text-gray-900'>Academic Department User Information</h3>
-                <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+    <Layout>
+      <div className='bg-white'>
+        <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-4xl mx-auto'>
+            <div>
+              <div className='flex justify-between items-center'>
+                <div>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Academic Department User Information</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                </div>
+                <UpdateLink />
               </div>
-              <UpdateLink />
-            </div>
-            <div className='mt-5 border-t border-gray-200'>
-              <dl className='sm:divide-y sm:divide-gray-200'>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Name</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
-                </div>
-                <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                  <dt className='text-sm font-medium text-gray-500'>Phone</dt>
-                  <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
-                </div>
-              </dl>
+              <div className='mt-5 border-t border-gray-200'>
+                <dl className='sm:divide-y sm:divide-gray-200'>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
+                  </div>
+                  <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
+                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

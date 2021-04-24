@@ -24,8 +24,8 @@ const ActivateStudent = () => {
         }
       } catch (error) {
         console.log(error)
-        if (error?.code === 4001) return
         setHasError(true)
+        if (error?.code === 4001) return
       } finally {
         setLoading(false)
       }

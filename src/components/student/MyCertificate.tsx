@@ -76,6 +76,7 @@ const MyCertificate = () => {
     return (
       <Box textAlign='center'>
         <Text fontSize='2xl'>Your certificate hasn't been signed or created yet</Text>
+        <Image src='/cert_not_found.png' width='1024px' height='720px' />
       </Box>
     )
   }

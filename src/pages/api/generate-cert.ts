@@ -65,12 +65,13 @@ const S3 = new aws.S3({
   secretAccessKey: AWSSecretKey,
 })
 
-const waiit = (timeout): Promise<void> =>
-  new Promise((resolve) => {
+const waiit = (timeout): Promise<void> => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve()
     }, timeout)
   })
+}
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors)
@@ -80,26 +81,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (!major || !grade || !name || !studentID || !dob) {
       res.status(400).json({ error: 'Missing params!' })
+      return
     }
-    const params = `major=${major}&grade=${grade}&name=${name}&dob=${dob}}`
+    const params = `major=${major}&grade=${grade}&name=${name}&dob=${dob}`
     const URL =
       process.env.NODE_ENV === 'production'
-        ? `https://https://uet-cert-verification.netlify.app/certificate/generate?${params}`
-        : `http://localhost:3000/certificate/generate?${params}`
+        ? `https://uet-cert-verification.netlify.app/certificate/generate?${params}`
+        : `http://host.docker.internal:3001/certificate/generate?${params}`
 
     let browser = null
 
     try {
-      browser = await getBrowserInstance()
+      browser = await puppeteer.connect({ browserWSEndpoint: 'ws://localhost:8080' })
       const page = await browser.newPage()
       await page.setViewport({
         width: 1750,
         height: 989,
         deviceScaleFactor: 1,
       })
-      await page.goto(URL, { waitUntil: 'networkidle2' })
-
+      await page.goto(URL, { waitUntil: 'networkidle0' })
       // await waiit(1000)
+
       const imageBuffer = await page.screenshot()
 
       const fileName = `grad_cert_${studentID}.jpg`
@@ -143,7 +145,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       // return callback(error);
     } finally {
       if (browser !== null) {
-        await browser.close()
+        await browser.disconnect()
       }
     }
   }

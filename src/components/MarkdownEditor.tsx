@@ -32,7 +32,7 @@ const MarkdownEditor: FC<ReadOnly | Editable> = ({ initValue, setValue, readOnly
   const signRequest = async (file: File): Promise<string> => {
     try {
       const { data } = await axios.get(
-        process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api/sign-s3' : '/api/sign-s3',
+        process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api/sign-s3' : '/api/sign-s3',
         {
           params: {
             'file-name': file.name,
