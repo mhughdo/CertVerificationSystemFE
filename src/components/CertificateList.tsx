@@ -116,7 +116,7 @@ const CertificateList = () => {
                 },
               }}>
               <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
-                <Link href={`/certificate/${index}/view`} passHref>
+                <Link href={`/certificate/${cert.studentID}/view`} passHref>
                   <LinkOverlay>
                     {cert.studentID} - {cert.studentName}
                   </LinkOverlay>
