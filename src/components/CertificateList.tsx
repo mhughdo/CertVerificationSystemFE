@@ -9,7 +9,7 @@ import Link from 'next/link'
 const CertificateList = () => {
   const toast = useToast()
   const { state } = useAppState()
-  const { userContract, accountAddress, certContract } = state
+  const { accountAddress, certContract } = state
   const [filtered, setFiltered] = useState<
     (Certificate & {
       studentID: string
@@ -53,6 +53,7 @@ const CertificateList = () => {
           i += 1
         }
 
+        console.log(normalizedCertList)
         setCertificateList(normalizedCertList)
       } catch (error) {
         console.log(error)
@@ -75,7 +76,10 @@ const CertificateList = () => {
     } else {
       setFiltered(
         certificateList.filter((c) => {
-          return c.studentID.toLowerCase().includes(searchInput.toLowerCase())
+          return (
+            c.studentID.toLowerCase().includes(searchInput.toLowerCase()) ||
+            c.studentName.toLowerCase().includes(searchInput.toLowerCase())
+          )
         })
       )
     }
@@ -98,8 +102,20 @@ const CertificateList = () => {
       <Grid templateColumns='repeat(3, 1fr)' gap={6}>
         {filtered?.map((cert, index) => {
           return (
-            <LinkBox as='article' w='100%' bg='gray.100' padding={8} borderRadius='lg' key={index}>
-              <Text fontSize='xl' fontWeight='bold' mb={2}>
+            <LinkBox
+              as='article'
+              w='100%'
+              bg='gray.100'
+              padding={8}
+              pb={2}
+              borderRadius='lg'
+              key={index}
+              sx={{
+                ':hover  #arrow': {
+                  opacity: '1 !important',
+                },
+              }}>
+              <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
                 <Link href={`/certificate/${index}/view`} passHref>
                   <LinkOverlay>
                     {cert.studentID} - {cert.studentName}
@@ -108,6 +124,25 @@ const CertificateList = () => {
               </Text>
 
               <Text>Grade: {cert.grade}</Text>
+              <Box d='flex' alignItems='baseline'>
+                <Text fontSize='sm' mt={4} fontWeight='500' mr={2}>
+                  See more
+                </Text>
+                <svg
+                  id='arrow'
+                  width='36'
+                  height='10'
+                  viewBox='0 0 36 12'
+                  fill='none'
+                  style={{ opacity: 0, transition: 'opacity 125ms ease 0s' }}>
+                  <path
+                    d='M0.75 6H11.25 M6 0.75L11.25 6L6 11.25'
+                    stroke='#4433ff'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </Box>
             </LinkBox>
           )
         })}

@@ -255,7 +255,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
             </div>
 
             <main className='-mt-32'>
-              <div className='max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8'>
+              <div className='max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8' style={{ minWidth: '80rem' }}>
                 {/* Replace with your content */}
                 <div className='bg-white rounded-lg shadow px-5 py-6 sm:px-6' style={{ minHeight: '400px' }}>
                   {children}

@@ -28,7 +28,7 @@ const StudentManage = () => {
         // batch.execute()
 
         const studentList = (await userContract.methods.getAllStudent().call({ from: accountAddress })) || []
-        const normalizedAccountList = studentList.map(normalizeWeb3Object)
+        const normalizedAccountList = studentList.slice(1, studentList.length).map(normalizeWeb3Object)
         setStudentList(normalizedAccountList)
       } catch (error) {
         console.log('Error getting account', error)
@@ -51,7 +51,12 @@ const StudentManage = () => {
       </Text>
 
       <Box d='flex' justifyContent='flex-end' mb={8}>
-        <Button colorScheme='teal' size='md' onClick={() => Router.push('/student/new')}>
+        <Button
+          colorScheme='teal'
+          size='md'
+          onClick={() => {
+            return Router.push('/student/new')
+          }}>
           Create new account
         </Button>
       </Box>

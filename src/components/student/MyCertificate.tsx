@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useAppState, Certificate, Student } from '@store/appState'
 import { useToast, Box, Text, Button } from '@chakra-ui/react'
 import { normalizeWeb3Object } from '@utils/index'
-import Image from 'next/image'
 import CertRenderer from '@components/CertRenderer'
 
 const MyCertificate = () => {
@@ -61,13 +60,12 @@ const MyCertificate = () => {
     return (
       <Box textAlign='center'>
         <Text fontSize='2xl'>Your certificate hasn't been signed or created yet</Text>
-        <Image src='/cert_not_found.png' width='1024px' height='720px' />
       </Box>
     )
   }
 
   return (
-    <Box minW='1200px'>
+    <Box>
       {cert?.visible === true && (
         <Box d='flex' alignItems='center' mb={8} justifyContent='center'>
           <Text>Your certificate is visible to all companies.</Text>
@@ -85,7 +83,12 @@ const MyCertificate = () => {
         </Box>
       )}
       <Box>
-        <CertRenderer />
+        <CertRenderer
+          major={(user as Student).major}
+          name={user.name}
+          grade={cert.grade}
+          dob={(user as Student).date}
+        />
       </Box>
     </Box>
   )

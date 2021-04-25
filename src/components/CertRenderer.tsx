@@ -36,7 +36,7 @@ const CertRenderer: FC<{ major?: string; name?: string; grade?: string; dob?: st
   }
 
   return (
-    <Box w='95%' minW='95%' minH='678px' d='flex' justifyContent='center' position='relative'>
+    <Box w='95%' minW='100%' minH='678px' d='flex' justifyContent='center' position='relative'>
       <Box position='absolute' inset='0'>
         <Image src='/trong-dong.png' width='1200px' height='678px' />
       </Box>

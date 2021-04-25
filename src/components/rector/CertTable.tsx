@@ -13,11 +13,12 @@ import {
   Portal,
   useToast,
   ButtonGroup,
+  Checkbox,
+  Text,
 } from '@chakra-ui/react'
 import { Certificate, useAppState, Role } from '@store/appState'
 import { FC, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
 
 const CertTable: FC<{
   certList: (Certificate & {
@@ -33,12 +34,32 @@ const CertTable: FC<{
   const { user, certContract, accountAddress } = state
   const toast = useToast()
   const [loading, setLoading] = useState(false)
+  const [checkboxes, setCheckboxes] = useState<boolean[]>([])
+  const hasOneCheckboxChecked = !!checkboxes.find((c) => {
+    return !!c
+  })
 
   const signCertificate = (id: number) => {
     return async () => {
       try {
         setLoading(true)
         await certContract.methods.signCertificate(id).send({ from: accountAddress })
+
+        // toast({
+        //   title: 'Info',
+        //   description: 'Generating certificate image...',
+        //   status: 'info',
+        //   duration: 1000,
+        //   position: 'top',
+        // })
+        // await axios.post('/api/generate-cert', {
+        //   major: certList[id].studentMajor,
+        //   grade: certList[id].grade,
+        //   name: certList[id].studentName,
+        //   studentID: certList[id].studentID,
+        //   dob: certList[id].studentDOB,
+        // })
+
         const newCertList = [...certList]
         const signedItem = newCertList[id]
         signedItem.signed = true
@@ -77,8 +98,77 @@ const CertTable: FC<{
     }
   }
 
+  const signCertificates = async () => {
+    try {
+      setLoading(true)
+      const ids = checkboxes.filter(Boolean).map((c, index) => {
+        return index
+      })
+
+      if (!ids.length) {
+        setLoading(false)
+        return
+      }
+
+      await certContract.methods.signMultipleCert(ids).send({ from: accountAddress })
+
+      const newCertList = [...certList]
+      for (const id of ids) {
+        const signedItem = newCertList[id]
+        signedItem.signed = true
+        newCertList[id] = signedItem
+      }
+      setCertList(newCertList)
+      toast({
+        title: 'Success',
+        description: 'Cert was successfully signed!',
+        status: 'success',
+        duration: 2000,
+        position: 'top',
+      })
+    } catch (error) {
+      console.log(error)
+      if (error?.code === 4001) {
+        toast({
+          title: 'Info',
+          description: 'Canceled certificates creation!',
+          status: 'info',
+          duration: 2000,
+          position: 'top',
+        })
+        return
+      }
+      toast({
+        title: 'Error.',
+        description: 'Error occured while signing certificates!',
+        status: 'error',
+        duration: 3000,
+        position: 'top',
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Box>
+      {user.role === Role.RECTOR && (
+        <Box d='flex' alignItems='center'>
+          <Button
+            colorScheme='teal'
+            size='md'
+            my={4}
+            mr={4}
+            onClick={signCertificates}
+            disabled={!hasOneCheckboxChecked}>
+            Sign certificates
+          </Button>
+          {checkboxes.find((c) => {
+            return !!c
+          }) && <Text>Selected {checkboxes.filter(Boolean).length} rows</Text>}
+        </Box>
+      )}
+
       <div>
         <div className='max-w-7xl mx-auto'>
           <div className='flex flex-col'>
@@ -88,6 +178,25 @@ const CertTable: FC<{
                   <table className='min-w-full divide-y divide-gray-200'>
                     <thead className='bg-gray-50'>
                       <tr>
+                        {user.role === Role.RECTOR && (
+                          <th
+                            scope='col'
+                            className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                            <Checkbox
+                              colorScheme='green'
+                              isChecked={hasOneCheckboxChecked}
+                              onChange={(e) => {
+                                const { checked } = e.target
+                                setCheckboxes(
+                                  certList.map((cert, index) => {
+                                    return certList[index].signed === false && !!checked
+                                  })
+                                )
+                              }}
+                            />
+                          </th>
+                        )}
+
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
@@ -117,7 +226,7 @@ const CertTable: FC<{
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Signed
+                          Status
                         </th>
 
                         {user.role === Role.RECTOR && (
@@ -132,6 +241,21 @@ const CertTable: FC<{
                         certList.map((cert, index) => {
                           return (
                             <tr key={index}>
+                              {user.role === Role.RECTOR && (
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                                  <Checkbox
+                                    colorScheme='green'
+                                    isChecked={checkboxes[index]}
+                                    isDisabled={certList[index].signed === true}
+                                    onChange={(e) => {
+                                      const newCheckboxes = [...checkboxes]
+                                      newCheckboxes[index] = e.target.checked
+                                      setCheckboxes(newCheckboxes)
+                                    }}
+                                  />
+                                </td>
+                              )}
+
                               <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600'>
                                 <Link href={`/student/${cert.studentID}/view`}>
                                   <a>{cert.studentID}</a>

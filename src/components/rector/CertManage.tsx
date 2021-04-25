@@ -1,6 +1,6 @@
 import Layout from '@components/Layout'
 import { useEffect, useState } from 'react'
-import { useAppState, Certificate, Student } from '@store/appState'
+import { useAppState, Certificate, Student, Role } from '@store/appState'
 import { useToast, Button, Text, Box } from '@chakra-ui/react'
 import { normalizeWeb3Object } from '@utils/index'
 import Router from 'next/router'
@@ -8,7 +8,7 @@ import CertTable from '@components/rector/CertTable'
 
 const CertManage = () => {
   const { state } = useAppState()
-  const { web3, certContract, accountAddress } = state
+  const { user, certContract, accountAddress } = state
   const [certList, setCertList] = useState<
     (Certificate & {
       studentID: string
@@ -43,7 +43,6 @@ const CertManage = () => {
         }
 
         setCertList(normalizedCertList)
-        console.log(certList)
       } catch (error) {
         console.log('Error getting account', error)
         toast({
@@ -65,16 +64,19 @@ const CertManage = () => {
         Certificate Management
       </Text>
 
-      <Box d='flex' justifyContent='flex-end' mb={8}>
-        <Button
-          colorScheme='teal'
-          size='md'
-          onClick={() => {
-            return Router.push('/certificate/new')
-          }}>
-          Create new certificate
-        </Button>
-      </Box>
+      {user.role === Role.AADEPARTMENT && (
+        <Box d='flex' justifyContent='flex-end' mb={8}>
+          <Button
+            colorScheme='teal'
+            size='md'
+            onClick={() => {
+              return Router.push('/certificate/new')
+            }}>
+            Create new certificate
+          </Button>
+        </Box>
+      )}
+
       <CertTable certList={certList} setCertList={setCertList} />
     </Layout>
   )
