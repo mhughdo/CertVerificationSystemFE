@@ -31,6 +31,7 @@
     "react-hook-form": "^7.0.7",
     "react-icons": "^4.2.0",
     "react-markdown": "^6.0.0",
+    "react-papaparse": "^3.12.1",
     "react-particles-js": "^3.4.1",
     "react-rainbow-components": "^1.25.0",
     "react-select": "^4.3.0",
