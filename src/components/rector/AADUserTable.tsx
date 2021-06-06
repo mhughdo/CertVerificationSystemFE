@@ -25,42 +25,44 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
   const { state } = useAppState()
   const { userContract, accountAddress } = state
 
-  const deactivateAccount = (id: number) => async () => {
-    try {
-      await userContract.methods.deactiveAADepartmentUser(id).send({ from: accountAddress })
+  const deactivateAccount = (id: number) => {
+    return async () => {
+      try {
+        await userContract.methods.deactiveAADepartmentUser(id).send({ from: accountAddress })
 
-      const newAccountList = [...AADAccountList]
-      const unactivatedAcc = newAccountList[id]
-      unactivatedAcc.isActive = false
-      newAccountList[id] = unactivatedAcc
+        const newAccountList = [...AADAccountList]
+        const unactivatedAcc = newAccountList[id]
+        unactivatedAcc.isActive = false
+        newAccountList[id] = unactivatedAcc
 
-      setAADAccountList(newAccountList)
-      toast({
-        title: 'Success',
-        description: 'Account was successfully deactivated!',
-        status: 'success',
-        duration: 2000,
-        position: 'top',
-      })
-    } catch (error) {
-      console.log('Error getting account', error)
-      if (error?.code === 4001) {
+        setAADAccountList(newAccountList)
         toast({
-          title: 'Info',
-          description: 'Canceled account deactivation!',
-          status: 'info',
+          title: 'Success',
+          description: 'Account was successfully deactivated!',
+          status: 'success',
           duration: 2000,
           position: 'top',
         })
-        return
+      } catch (error) {
+        console.log('Error getting account', error)
+        if (error?.code === 4001) {
+          toast({
+            title: 'Info',
+            description: 'Canceled account deactivation!',
+            status: 'info',
+            duration: 2000,
+            position: 'top',
+          })
+          return
+        }
+        toast({
+          title: 'Error.',
+          description: 'Error occured while deactivating account!',
+          status: 'error',
+          duration: 3000,
+          position: 'top',
+        })
       }
-      toast({
-        title: 'Error.',
-        description: 'Error occured while deactivating account!',
-        status: 'error',
-        duration: 3000,
-        position: 'top',
-      })
     }
   }
 
@@ -78,80 +80,84 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Name
+                          Tên
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Phone
+                          Số điện thoại
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Date
+                          Ngày sinh
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Status
+                          Trạng thái
                         </th>
                         <th scope='col' className='relative px-6 py-3'>
-                          <span className='sr-only'>Deactivate</span>
+                          <span className='sr-only'>Huỷ kích hoạt</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200' data-todo-x-max='1'>
                       {AADAccountList.length ? (
-                        AADAccountList.map((account, index) => (
-                          <tr key={index}>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                              {account.name}
-                            </td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.phone}</td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.date}</td>
-                            <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                              {account.isActive ? (
-                                <Tag colorScheme='green'>Active</Tag>
-                              ) : (
-                                <Tag colorScheme='red'>Unactivated</Tag>
-                              )}
-                            </td>
-                            <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-                              <Popover isLazy>
-                                {({ isOpen, onClose }) => (
-                                  <>
-                                    <PopoverTrigger>
-                                      <Button>Deactivate</Button>
-                                    </PopoverTrigger>
-                                    <Portal>
-                                      <PopoverContent>
-                                        <PopoverArrow />
-                                        <PopoverCloseButton />
-                                        <PopoverHeader>Confirmation!</PopoverHeader>
-                                        <PopoverBody>Are you sure you want to deactivate this account?</PopoverBody>
-                                        <PopoverFooter d='flex' justifyContent='flex-end'>
-                                          <ButtonGroup size='sm'>
-                                            <Button
-                                              colorScheme='red'
-                                              onClick={() => {
-                                                deactivateAccount(index)()
-                                                onClose()
-                                              }}>
-                                              Deactivate
-                                            </Button>
-                                          </ButtonGroup>
-                                        </PopoverFooter>
-                                      </PopoverContent>
-                                    </Portal>
-                                  </>
+                        AADAccountList.map((account, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+                                {account.name}
+                              </td>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.phone}</td>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.date}</td>
+                              <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                                {account.isActive ? (
+                                  <Tag colorScheme='green'>Đã kích hoạt</Tag>
+                                ) : (
+                                  <Tag colorScheme='red'>Chưa kích hoạt</Tag>
                                 )}
-                              </Popover>
-                            </td>
-                          </tr>
-                        ))
+                              </td>
+                              <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+                                <Popover isLazy>
+                                  {({ isOpen, onClose }) => {
+                                    return (
+                                      <>
+                                        <PopoverTrigger>
+                                          <Button>Huỷ kích hoạt</Button>
+                                        </PopoverTrigger>
+                                        <Portal>
+                                          <PopoverContent>
+                                            <PopoverArrow />
+                                            <PopoverCloseButton />
+                                            <PopoverHeader>Xác nhận!</PopoverHeader>
+                                            <PopoverBody>Bạn có chắc huỷ kích hoạt tài khoản này?</PopoverBody>
+                                            <PopoverFooter d='flex' justifyContent='flex-end'>
+                                              <ButtonGroup size='sm'>
+                                                <Button
+                                                  colorScheme='red'
+                                                  onClick={() => {
+                                                    deactivateAccount(index)()
+                                                    onClose()
+                                                  }}>
+                                                  Huỷ kích hoạt
+                                                </Button>
+                                              </ButtonGroup>
+                                            </PopoverFooter>
+                                          </PopoverContent>
+                                        </Portal>
+                                      </>
+                                    )
+                                  }}
+                                </Popover>
+                              </td>
+                            </tr>
+                          )
+                        })
                       ) : (
                         <tr>
-                          <td className='p-4'>No data</td>
+                          <td className='p-4'>Không có dữ liệu</td>
                         </tr>
                       )}
                     </tbody>

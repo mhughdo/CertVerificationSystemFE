@@ -28,14 +28,14 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const RectorNav = (
     <>
       <Link href='/'>
-        <a className={getLinkClassName('/')}>Academic Affairs Accounts</a>
+        <a className={getLinkClassName('/')}>Tài khoản Phòng đào tạo</a>
       </Link>
 
       <Link href='/certificate/manage'>
-        <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
+        <a className={getLinkClassName('/certificate/manage')}>Quản lý bằng tốt nghiệp</a>
       </Link>
       <Link href='/rector/transfer'>
-        <a className={getLinkClassName('/rector/transfer')}>Rector Transfer</a>
+        <a className={getLinkClassName('/rector/transfer')}>Chuyển giao hiệu trưởng</a>
       </Link>
     </>
   )
@@ -43,14 +43,14 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const AADNav = (
     <>
       <Link href='/'>
-        <a className={getLinkClassName('/')}>Student</a>
+        <a className={getLinkClassName('/')}>Quản lý sinh viên</a>
       </Link>
 
       <Link href='/certificate/manage'>
-        <a className={getLinkClassName('/certificate/manage')}>Certificate</a>
+        <a className={getLinkClassName('/certificate/manage')}>Quản lý bằng tốt nghiệp</a>
       </Link>
       <Link href='/company/manage'>
-        <a className={getLinkClassName('/company/manage')}>Company</a>
+        <a className={getLinkClassName('/company/manage')}>Quản lý công ty</a>
       </Link>
     </>
   )
@@ -58,10 +58,10 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const StudentNav = (
     <>
       <Link href='/'>
-        <a className={getLinkClassName('/')}>My Certificate</a>
+        <a className={getLinkClassName('/')}>Bằng tốt nghiệp</a>
       </Link>
       <Link href='/company/list'>
-        <a className={getLinkClassName('/company/list')}>Company</a>
+        <a className={getLinkClassName('/company/list')}>Công ty</a>
       </Link>
     </>
   )
@@ -69,7 +69,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
   const CompanyNav = (
     <>
       <Link href='/'>
-        <a className={getLinkClassName('/')}>Certificate Search</a>
+        <a className={getLinkClassName('/')}>Tìm kiếm bằng</a>
       </Link>
     </>
   )
@@ -144,7 +144,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                               aria-labelledby='user-menu'>
                               <Link href='/profile'>
                                 <a className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
-                                  Your Profile
+                                  Tài khoản
                                 </a>
                               </Link>
                             </Transition>
@@ -239,7 +239,7 @@ const Layout: FC<{ pageTitle?: string }> = ({ children, pageTitle }) => {
                           <a
                             href='/'
                             className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                            Your Profile
+                            Tài khoản
                           </a>
                         </Link>
                       </div>

@@ -54,7 +54,7 @@ const StudentManage = () => {
     console.log(err)
     toast({
       title: 'Error.',
-      description: 'Error occured while parsing file!',
+      description: 'Có lỗi xảy ra khi nhập danh sách!',
       status: 'error',
       duration: 3000,
       position: 'top',
@@ -65,7 +65,7 @@ const StudentManage = () => {
     if (student?.length !== 9) {
       toast({
         title: 'Error.',
-        description: `A row is missing one of required fields: ${fields.join('')}!`,
+        description: `Có trường bắt buộc bị thiếu, các trường bắt buộc: ${fields.join('')}!`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -83,7 +83,7 @@ const StudentManage = () => {
     if (emptyField) {
       toast({
         title: 'Empty value.',
-        description: `All fields in row must be filled!`,
+        description: `Tất cả các trường trong 1 hàng phải được điền!`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -93,8 +93,8 @@ const StudentManage = () => {
 
     if (newStudent[0]?.length !== 8) {
       toast({
-        title: 'Invalid value.',
-        description: `Invalid newStudentID: ${newStudent[0]}}!`,
+        title: 'Giá trị sai.',
+        description: `MSSV không hợp lệ: ${newStudent[0]}}!`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -104,8 +104,8 @@ const StudentManage = () => {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newStudent[2])) {
       toast({
-        title: 'Invalid value.',
-        description: `Invalid email: ${newStudent[2]}`,
+        title: 'Giá trị sai.',
+        description: `Email không hợp lệ: ${newStudent[2]}`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -115,8 +115,8 @@ const StudentManage = () => {
 
     if (!/^\d{9,11}$/.test(newStudent[4])) {
       toast({
-        title: 'Invalid value.',
-        description: `Invalid phone number: ${newStudent[4]}!`,
+        title: 'Giá trị sai.',
+        description: `Số điện thoại khợp lệ: ${newStudent[4]}!`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -126,8 +126,8 @@ const StudentManage = () => {
 
     if (!/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/.test(newStudent[3])) {
       toast({
-        title: 'Invalid value.',
-        description: `Invalid date: ${newStudent[3]}`,
+        title: 'Giá trị sai.',
+        description: `Ngày sinh không hợp lệ: ${newStudent[3]}`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -137,8 +137,8 @@ const StudentManage = () => {
 
     if (!/\d{1}\.\d{1,2}/.test(newStudent[7])) {
       toast({
-        title: 'Invalid value.',
-        description: `Invalid cpa number: ${newStudent[7]}!`,
+        title: 'Giá trị sai.',
+        description: `Điểm k hợp lệ: ${newStudent[7]}!`,
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -169,14 +169,18 @@ const StudentManage = () => {
         const studentID = `${student[0]}`
         const s = await userContract.methods.getStudentById(studentID).call({ from: accountAddress })
         if (!s?.name) {
-          nonExistiedStudents.push(student)
+          nonExistiedStudents.push(
+            student?.map((item: string) => {
+              return item.trim()
+            })
+          )
         }
       }
 
       if (!nonExistiedStudents?.length) {
         toast({
           title: 'Info.',
-          description: 'No new accounts to be imported!',
+          description: 'Không có tài khoản mới nào cần được nhập!',
           status: 'info',
           duration: 3000,
           position: 'top',
@@ -193,7 +197,7 @@ const StudentManage = () => {
         .send({ from: accountAddress })
       toast({
         title: 'Info',
-        description: 'Sending email to students...',
+        description: 'Gửi email kích hoạt cho sinh viên...',
         status: 'info',
         duration: 1500,
         position: 'top',
@@ -204,20 +208,23 @@ const StudentManage = () => {
           return { ...acc, [fieldName]: student[index].trim() }
         }, {}) as Student
       })
-      console.log(studentObjArr)
+
+      const studentPromises = []
       for (const student of studentObjArr) {
         const studentID = `${student.id}`
         const nonce = await userContract.methods.getStudentNonce(studentID).call({ from: accountAddress })
 
         if (nonce) {
-          await axios.post('/api/send-email', { to: student.email, studentID: student.id, nonce })
+          studentPromises.push(axios.post('/api/send-email', { to: student.email, studentID: student.id, nonce }))
         }
       }
+
+      await Promise.all(studentPromises)
 
       setStudentList([...studentList, ...studentObjArr])
       toast({
         title: 'Success.',
-        description: 'Successfully imported student accounts!',
+        description: 'Nhập danh sách sinh viên thành công!',
         status: 'success',
         duration: 3000,
         position: 'top',
@@ -226,7 +233,7 @@ const StudentManage = () => {
       console.log(error)
       toast({
         title: 'Error.',
-        description: 'Error occured while importing Student Accounts!',
+        description: 'Đã có lỗi xảy ra khi nhập thông tin sinh viên!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -246,7 +253,7 @@ const StudentManage = () => {
   return (
     <Box>
       <Text mb={4} fontSize='2xl' fontWeight='bold'>
-        Student Management
+        Danh sách sinh viên
       </Text>
 
       <Box d='flex' justifyContent='flex-end' mb={8}>
@@ -255,7 +262,7 @@ const StudentManage = () => {
             return (
               <aside style={{ marginBottom: '6px' }}>
                 <Button mr={4} onClick={handleOpenDialog} disabled={isImportingStudent}>
-                  Import Students
+                  Nhập danh sách sinh viên
                 </Button>
               </aside>
             )
@@ -267,7 +274,7 @@ const StudentManage = () => {
           onClick={() => {
             return Router.push('/student/new')
           }}>
-          Create new account
+          Tạo tài khoản mới
         </Button>
       </Box>
       <StudentTable studentList={studentList} />

@@ -69,15 +69,15 @@ const ActivateStudent = () => {
           {user && (
             <Alert status='error'>
               <AlertIcon />
-              <AlertTitle mr={2}>Cannot activate account!</AlertTitle>
-              <AlertDescription>There's already an account associated with this address.</AlertDescription>
+              <AlertTitle mr={2}>Không thể kích hoạt được tài khoản!</AlertTitle>
+              <AlertDescription>Đã có một tài khoản được liên kết với địa chỉ ví này.</AlertDescription>
             </Alert>
           )}
 
           {!user && (!studentID || !nonce) && (
             <Alert status='error'>
               <AlertIcon />
-              <AlertTitle mr={2}>Invalid params!</AlertTitle>
+              <AlertTitle mr={2}>Lỗi!</AlertTitle>
               <AlertDescription>Query params are invalid or missing.</AlertDescription>
             </Alert>
           )}
@@ -86,7 +86,7 @@ const ActivateStudent = () => {
             <>
               <Alert status='success'>
                 <AlertIcon />
-                Account was activated successfully!
+                Tài khoản được kích hoạt thành công!
               </Alert>
             </>
           )}
@@ -94,8 +94,8 @@ const ActivateStudent = () => {
           {!user && studentID && nonce && hasError && (
             <Alert status='error'>
               <AlertIcon />
-              <AlertTitle mr={2}>Activation failed!</AlertTitle>
-              <AlertDescription>Error occured while activating your account, please try again.</AlertDescription>
+              <AlertTitle mr={2}>Kích hoạt tài khoản thất bại!</AlertTitle>
+              <AlertDescription>Đã có lỗi khi kích hoạt tài khoản của bạn, vui lòng thử lại.</AlertDescription>
             </Alert>
           )}
         </Box>

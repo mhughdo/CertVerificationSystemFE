@@ -114,19 +114,19 @@ const RectorTransfer = () => {
                 />
               </FormControl>
               <FormControl id='current-rector-name'>
-                <FormLabel>Rector Name</FormLabel>
+                <FormLabel>Tên hiệu trưởng</FormLabel>
                 <Input value={name} id='current-rector-name' name='current-rector-name' type='text' isReadOnly />
               </FormControl>
               <FormControl id='current-rector-date'>
-                <FormLabel>Date of birth</FormLabel>
+                <FormLabel>Ngày sinh</FormLabel>
                 <Input value={rectorDate} id='current-rector-date' name='current-rector-date' type='text' isReadOnly />
               </FormControl>
               <FormControl id='current-rector-phone'>
-                <FormLabel>Phone number</FormLabel>
+                <FormLabel>Số điện thoại</FormLabel>
                 <Input value={phone} id='current-rector-phone' name='current-rector-phone' type='text' isReadOnly />
               </FormControl>
               <FormControl id='current-rector-term'>
-                <FormLabel>Term</FormLabel>
+                <FormLabel>Nhiệm kỳ</FormLabel>
                 <Input value={term} id='current-rector-term' name='current-rector-term' type='text' isReadOnly />
               </FormControl>
             </Stack>
@@ -135,15 +135,15 @@ const RectorTransfer = () => {
           <Box flex='1 1' bg='white' py='8' px={4} shadow='base' rounded='lg'>
             <Stack spacing='6'>
               <FormControl id='address' isRequired>
-                <FormLabel>Address</FormLabel>
+                <FormLabel>Địa chỉ ví</FormLabel>
                 <Input {...register('address')} id='address' name='address' type='text' required />
               </FormControl>
               <FormControl id='name' isRequired>
-                <FormLabel>Rector Name</FormLabel>
+                <FormLabel>Tên hiệu trưởng mới</FormLabel>
                 <Input {...register('name')} id='name' name='name' type='text' required />
               </FormControl>
               <Box>
-                <Text mb={4}>Date of birth</Text>
+                <Text mb={4}>Ngày sinh</Text>
                 <DatePicker
                   onChange={(value) => {
                     return setDate(value)
@@ -152,7 +152,7 @@ const RectorTransfer = () => {
                 />
               </Box>
               <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
-                <FormLabel>Phone number</FormLabel>
+                <FormLabel>Số điện thoại</FormLabel>
                 <Input
                   id='phone'
                   name='phone'
@@ -160,7 +160,7 @@ const RectorTransfer = () => {
                   {...register('phone', {
                     pattern: {
                       value: /^\d{9,11}$/,
-                      message: 'Phone number is invalid!',
+                      message: 'Số điện thoại không hợp lệ!',
                     },
                   })}
                   required
@@ -168,7 +168,7 @@ const RectorTransfer = () => {
                 <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
               </FormControl>
               <FormControl id='term' isRequired>
-                <FormLabel>Term</FormLabel>
+                <FormLabel>Nhiệm kỳ</FormLabel>
                 <Input {...register('term')} id='term' name='term' type='text' required />
               </FormControl>
             </Stack>
@@ -176,7 +176,7 @@ const RectorTransfer = () => {
         </Box>
         <Box d='flex' justifyContent='center'>
           <Button colorScheme='teal' mt={8} type='submit' disabled={loading}>
-            Transfer
+            Chuyển giao
           </Button>
         </Box>
       </form>

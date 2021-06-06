@@ -6,6 +6,12 @@ import { Certificate, useAppState } from '@store/appState'
 import { normalizeWeb3Object } from '@utils/index'
 import Link from 'next/link'
 
+const gradeEnToVi = {
+  excellent: 'Xuất sắc',
+  good: 'Giỏi',
+  credit: 'Khá',
+}
+
 const CertificateList = () => {
   const toast = useToast()
   const { state } = useAppState()
@@ -92,61 +98,69 @@ const CertificateList = () => {
           <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
           <Input
             value={searchInput}
-            placeholder='Search certificate'
+            placeholder='Tìm bằng tốt nghiệp'
             onChange={(e) => {
               return setSearchInput(e.target.value)
             }}
           />
         </InputGroup>
       </Box>
-      <Grid templateColumns='repeat(3, 1fr)' gap={6}>
-        {filtered?.map((cert, index) => {
-          return (
-            <LinkBox
-              as='article'
-              w='100%'
-              bg='gray.100'
-              padding={8}
-              pb={2}
-              borderRadius='lg'
-              key={index}
-              sx={{
-                ':hover  #arrow': {
-                  opacity: '1 !important',
-                },
-              }}>
-              <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
-                <Link href={`/certificate/${cert.studentID}/view`} passHref>
-                  <LinkOverlay>
-                    {cert.studentID} - {cert.studentName}
-                  </LinkOverlay>
-                </Link>
-              </Text>
 
-              <Text>Grade: {cert.grade}</Text>
-              <Box d='flex' alignItems='baseline'>
-                <Text fontSize='sm' mt={4} fontWeight='500' mr={2}>
-                  See more
+      {
+        filtered?.length ? <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+          {filtered?.map((cert, index) => {
+            return (
+              <LinkBox
+                as='article'
+                w='100%'
+                bg='gray.100'
+                padding={8}
+                pb={2}
+                borderRadius='lg'
+                key={index}
+                sx={{
+                  ':hover  #arrow': {
+                    opacity: '1 !important',
+                  },
+                }}>
+                <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
+                  <Link href={`/certificate/${cert.studentID}/view`} passHref>
+                    <LinkOverlay>
+                      {cert.studentID} - {cert.studentName}
+                    </LinkOverlay>
+                  </Link>
                 </Text>
-                <svg
-                  id='arrow'
-                  width='36'
-                  height='10'
-                  viewBox='0 0 36 12'
-                  fill='none'
-                  style={{ opacity: 0, transition: 'opacity 125ms ease 0s' }}>
-                  <path
-                    d='M0.75 6H11.25 M6 0.75L11.25 6L6 11.25'
-                    stroke='#4433ff'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </Box>
-            </LinkBox>
-          )
-        })}
-      </Grid>
+
+                <Text>Loại: {gradeEnToVi[cert.grade ? cert.grade.toLowerCase() : ''] || ''}</Text>
+                <Box d='flex' alignItems='baseline'>
+                  <Text fontSize='sm' mt={4} fontWeight='500' mr={2}>
+                    Xem thêm
+                  </Text>
+                  <svg
+                    id='arrow'
+                    width='36'
+                    height='10'
+                    viewBox='0 0 36 12'
+                    fill='none'
+                    style={{ opacity: 0, transition: 'opacity 125ms ease 0s' }}>
+                    <path
+                      d='M0.75 6H11.25 M6 0.75L11.25 6L6 11.25'
+                      stroke='#4433ff'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </Box>
+              </LinkBox>
+            )
+          })}
+        </Grid> : (
+            (<Text textAlign='center' w='100%'>
+              Không có bằng tốt nghiệp nào được tìm thấy
+            </Text>)
+        )
+      }
+
     </Box>
   )
 }

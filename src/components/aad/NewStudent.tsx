@@ -58,7 +58,7 @@ const NewStudent = () => {
 
       toast({
         title: 'Info',
-        description: 'Sending email to student...',
+        description: 'Gửi email kích hoạt tới sinh viên...',
         status: 'info',
         duration: 1500,
         position: 'top',
@@ -67,7 +67,7 @@ const NewStudent = () => {
 
       toast({
         title: 'Success',
-        description: 'Account was successfully created!',
+        description: 'Tài khoản được tạo thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -78,7 +78,7 @@ const NewStudent = () => {
       if (error?.code === 4001) return
       toast({
         title: 'Error.',
-        description: 'Error occured while creating account!',
+        description: 'Đã có lỗi xảy ra khi tạo tài khoản!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -89,22 +89,22 @@ const NewStudent = () => {
   }
 
   return (
-    <Layout pageTitle='Create new student account'>
+    <Layout pageTitle='Tạo tài khoản sinh viên mới'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing='6'>
                 <FormControl id='studentID' isRequired>
-                  <FormLabel>Student ID</FormLabel>
+                  <FormLabel>MSSV</FormLabel>
                   <Input id='studentID' name='studentID' {...register('studentID')} type='text' required />
                 </FormControl>
                 <FormControl id='name' isRequired>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <Input id='name' name='name' {...register('name')} type='text' required />
                 </FormControl>
                 <FormControl id='email' isRequired isInvalid={Boolean(errors?.email?.message)}>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Địa chỉ email</FormLabel>
                   <InputGroup>
                     <Input
                       id='email'
@@ -114,7 +114,7 @@ const NewStudent = () => {
                       {...register('email', {
                         pattern: {
                           value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                          message: 'Email is not valid',
+                          message: 'Địa chỉ email k hợp lệ',
                         },
                       })}
                     />
@@ -122,7 +122,7 @@ const NewStudent = () => {
                   <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
                 </FormControl>
                 <Box>
-                  <Text mb={4}>Date of birth</Text>
+                  <Text mb={4}>Ngày sinh</Text>
                   <DatePicker
                     onChange={(value) => {
                       return setDate(value)
@@ -131,7 +131,7 @@ const NewStudent = () => {
                   />
                 </Box>
                 <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <InputGroup>
                     <Input
                       id='phone'
@@ -141,7 +141,7 @@ const NewStudent = () => {
                       {...register('phone', {
                         pattern: {
                           value: /^\d{9,11}$/,
-                          message: 'Phone number is invalid!',
+                          message: 'Số điện thoại không hợp lệ!',
                         },
                       })}
                     />
@@ -149,27 +149,27 @@ const NewStudent = () => {
                   <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
                 </FormControl>
                 <FormControl id='studentClass' isRequired>
-                  <FormLabel>Class</FormLabel>
+                  <FormLabel>Lớp</FormLabel>
                   <Input id='studentClass' name='studentClass' {...register('studentClass')} type='text' required />
                 </FormControl>
                 <FormControl id='major' isRequired>
-                  <FormLabel>Major</FormLabel>
+                  <FormLabel>Chuyên ngành</FormLabel>
                   <Input id='major' name='major' {...register('major')} type='text' required />
                 </FormControl>
                 <FormControl id='cpa' isRequired>
-                  <FormLabel>CPA</FormLabel>
+                  <FormLabel>Điểm</FormLabel>
                   <Input id='cpa' name='cpa' {...register('cpa')} type='text' required />
                 </FormControl>
                 <FormControl id='qualifiedForGraduation' isRequired>
-                  <FormLabel>Qualified For Graduation</FormLabel>
+                  <FormLabel>Đủ điều kiện tốt nghiệp</FormLabel>
                   <Select placeholder='Select option' defaultValue='true' {...register('qualifiedForGraduation')}>
-                    <option value='true'>True</option>
-                    <option value='false'>False</option>
+                    <option value='true'>Đã đủ</option>
+                    <option value='false'>Chưa đủ</option>
                   </Select>
                 </FormControl>
 
                 <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
-                  Create
+                  Tạo
                 </Button>
               </Stack>
             </form>

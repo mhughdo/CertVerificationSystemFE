@@ -61,7 +61,7 @@ const CertManage = () => {
   return (
     <Layout>
       <Text mb={4} fontSize='2xl' fontWeight='bold'>
-        Certificate Management
+        Danh sách bằng tốt nghiệp
       </Text>
 
       {user.role === Role.AADEPARTMENT && (
@@ -72,7 +72,7 @@ const CertManage = () => {
             onClick={() => {
               return Router.push('/certificate/new')
             }}>
-            Create new certificate
+            Tạo bằng tốt nghiệp
           </Button>
         </Box>
       )}

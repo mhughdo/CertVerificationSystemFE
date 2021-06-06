@@ -30,7 +30,7 @@ export const RegisterInputGroup = () => {
       console.log(error)
       toast({
         title: 'Error.',
-        description: 'Error occured while creating account!',
+        description: 'Đã có lỗi xảy ra khi tạo tài khoản!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -46,11 +46,11 @@ export const RegisterInputGroup = () => {
         <form ref={signUpRef} onSubmit={onSubmit}>
           <Stack spacing='6'>
             <FormControl id='company-name'>
-              <FormLabel>Company name</FormLabel>
+              <FormLabel>Tên công ty</FormLabel>
               <Input id='company_name' name='company_name' type='text' required />
             </FormControl>
             <Box>
-              <Text mb={2}>Description</Text>
+              <Text mb={2}>Mô tả</Text>
               <MarkdownEditor setValue={setMarkDownValue} />
             </Box>
             {/* <Box>
@@ -58,7 +58,7 @@ export const RegisterInputGroup = () => {
               <MarkdownEditor setValue={setMarkDownValue} />
             </Box> */}
             <Button type='submit' colorScheme='blue' size='lg' fontSize='md' disabled={loading}>
-              Sign up
+              Đăng ký
             </Button>
           </Stack>
         </form>
@@ -68,7 +68,7 @@ export const RegisterInputGroup = () => {
           <MotionBox initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <Alert status='success'>
               <AlertIcon />
-              Successfully registered an account, please wait until Office of Academic Affairs approves your account!
+              Tài khoản đã được tạo thành công, bạn có thể đăng nhập ngay sau khi Phòng đào tạo kích hoạt tài khoản!
             </Alert>
           </MotionBox>
         )}

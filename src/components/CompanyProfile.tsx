@@ -20,7 +20,7 @@ const UpdateLink = () => {
           aria-hidden='true'>
           <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z' />
         </svg>
-        Update
+        Cập nhật
       </a>
     </Link>
   )
@@ -76,25 +76,25 @@ const CompanyProfile = ({ company }: { company?: Company }) => {
             <div>
               <div className='flex justify-between items-center'>
                 <div>
-                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Company Information</h3>
-                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Công ty</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Thông tin cá nhân</p>
                 </div>
                 {user.role === Role.COMPANY && companyDetails?.name === user?.name && <UpdateLink />}
               </div>
               <div className='mt-5 border-t border-gray-200'>
                 <dl className='sm:divide-y sm:divide-gray-200'>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Tên</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{companyDetails?.name}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Description</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Mô tả</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                       <MarkdownEditor initValue={companyDetails?.description} readOnly />
                     </dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Job description</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Mô tả công việc</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                       <MarkdownEditor initValue={companyDetails?.jobInfo} readOnly />
                     </dd>

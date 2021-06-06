@@ -30,6 +30,7 @@ export type Rector = {
   date: string
   phone: string
   term: string
+  isActive?: boolean
 }
 
 export type AADUser = {

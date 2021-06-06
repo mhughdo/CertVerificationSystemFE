@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+
 import Web3Type from 'web3/types/index'
 
 declare global {
@@ -11,7 +12,10 @@ declare global {
 let web3: Web3Type
 export function getWeb3() {
   if (web3) return web3
-  if (window?.ethereum) {
+
+  if (process.env.NEXT_PUBLIC_APP_ENV === 'test') {
+    web3 = new Web3('http://127.0.0.1:8545')
+  } else if (window?.ethereum) {
     web3 = new Web3(window.ethereum)
   } else if (window?.web3) {
     web3 = new Web3(window.web3.currentProvider)

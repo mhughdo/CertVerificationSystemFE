@@ -21,7 +21,7 @@ const MyCertificate = () => {
       console.log(error)
       toast({
         title: 'Error.',
-        description: 'Error occured while fetching certificate!',
+        description: 'Đã có lỗi xảy ra khi lấy thông tin về bằng!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -34,10 +34,10 @@ const MyCertificate = () => {
 
   const changeCertVisibility = async () => {
     try {
-      await certContract.methods.changeCertVisibility(0).send({ from: accountAddress })
+      await certContract.methods.changeCertVisibility(cert.id).send({ from: accountAddress })
       toast({
         title: 'Success',
-        description: 'Cert visibility was successfully changed!',
+        description: 'Chế độ hiển thị của bằng đã được thay đổi thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -48,7 +48,7 @@ const MyCertificate = () => {
       if (error?.code === 4001) return
       toast({
         title: 'Error.',
-        description: 'Error occured while hiding your certificate!',
+        description: 'Đã có lỗi xảy ra khi thay đổi chế độ!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -59,7 +59,7 @@ const MyCertificate = () => {
   if (!cert || cert.signed === false) {
     return (
       <Box textAlign='center'>
-        <Text fontSize='2xl'>Your certificate hasn't been signed or created yet</Text>
+        <Text fontSize='2xl'>Bằng tốt nghiệp của bạn chưa được ký hoặc được tạo!</Text>
       </Box>
     )
   }
@@ -68,17 +68,17 @@ const MyCertificate = () => {
     <Box>
       {cert?.visible === true && (
         <Box d='flex' alignItems='center' mb={8} justifyContent='center'>
-          <Text>Your certificate is visible to all companies.</Text>
+          <Text>Bằng tốt nghiệp của bạn đang được công khai.</Text>
           <Button ml={4} onClick={changeCertVisibility}>
-            Hide
+            Ẩn
           </Button>
         </Box>
       )}
       {cert?.visible === false && (
         <Box d='flex' alignItems='center' mb={8} justifyContent='center'>
-          <Text>Your certificate is only visible to you.</Text>
+          <Text>Bằng tốt nghiệp của bạn đang ở chế độ chỉ mình tôi.</Text>
           <Button ml={4} onClick={changeCertVisibility}>
-            Make it public
+            Công khai
           </Button>
         </Box>
       )}

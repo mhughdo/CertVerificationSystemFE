@@ -11,6 +11,8 @@ import {
   InputGroup,
   Select,
   Text,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react'
 import Layout from '@components/Layout'
 import { useAppState, Student } from '@store/appState'
@@ -34,12 +36,13 @@ type FormData = {
 const StudentProfileUpdateByAAD = () => {
   const toast = useToast()
   const { state } = useAppState()
-  const { userContract, accountAddress } = state
+  const { userContract, accountAddress, certContract } = state
   const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormData>()
   const router = useRouter()
   const { query } = router
@@ -48,11 +51,14 @@ const StudentProfileUpdateByAAD = () => {
   const [currentID, setCurrentID] = useState('')
 
   const [date, setDate] = useState(new Date())
+  const [editDisabled, setEditDisabled] = useState(false)
 
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     try {
       setLoading(true)
       const { studentID, name, email, phone, studentClass, major, cpa, qualifiedForGraduation } = formData
+      console.log({ studentID, name, email, phone, studentClass, major, cpa, qualifiedForGraduation })
+      // return
       const formattedDate = formatDate(date)
 
       await userContract.methods
@@ -71,8 +77,8 @@ const StudentProfileUpdateByAAD = () => {
         .send({ from: accountAddress })
 
       toast({
-        title: 'Success',
-        description: 'Account was successfully updated!',
+        title: 'Thành công',
+        description: 'Tài khoản được cập nhật thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -81,8 +87,8 @@ const StudentProfileUpdateByAAD = () => {
       console.log(error)
       if (error?.code === 4001) return
       toast({
-        title: 'Error.',
-        description: 'Error occured while updating account!',
+        title: 'Lỗi.',
+        description: 'Đã có lỗi khi cập nhật!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -99,14 +105,18 @@ const StudentProfileUpdateByAAD = () => {
 
         const normaliedStudent = normalizeWeb3Object(student) as Student
         if (student?.id) {
+          const certCount = await certContract.methods.getStudentCertCount(student.id).call({ from: accountAddress })
+          if (Number(certCount) > 0) {
+            setEditDisabled(true)
+          }
           setStudent(normaliedStudent)
           setCurrentID(normaliedStudent.id)
         }
       } catch (error) {
         console.log(error)
         toast({
-          title: 'Error.',
-          description: 'Error occured while fetching student account!',
+          title: 'Lỗi.',
+          description: 'Đã có lỗi khi lấy thông tin sinh viên!',
           status: 'error',
           duration: 3000,
           position: 'top',
@@ -134,16 +144,45 @@ const StudentProfileUpdateByAAD = () => {
     }
   }, [student])
 
+  useEffect(() => {
+    if (student?.id) {
+      // setValue([
+      //   { studentID: student?.id },
+      //   { name: student?.name },
+      //   { email: student.email },
+      //   { phone: student?.phone },
+      //   { studentClass: student?.class },
+      //   { major: student?.major },
+      //   { cpa: student?.cpa },
+      //   { qualifiedForGraduation: `${student?.qualifiedForGraduation}` },
+      // ])
+
+      setValue('studentID', student?.id)
+      setValue('name', student?.name)
+      setValue('email', student?.email)
+      setValue('phone', student?.phone)
+      setValue('studentClass', student?.class)
+      setValue('major', student?.major)
+      setValue('cpa', student?.cpa)
+      setValue('qualifiedForGraduation', student?.qualifiedForGraduation)
+    }
+  }, [student])
+
   return (
-    <Layout pageTitle='Update student profile'>
+    <Layout pageTitle='Cập nhật tài khoản sinh viên'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
+        <Alert status='warning'>
+          <AlertIcon />
+          Không thể sửa thông tin sinh viên. Sinh viên này đã được tạo bằng tốt nghiệp!
+        </Alert>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing='6'>
                 <FormControl id='studentID' isRequired>
-                  <FormLabel>Student ID</FormLabel>
+                  <FormLabel>MSSV</FormLabel>
                   <Input
+                    disabled={editDisabled}
                     defaultValue={student?.id}
                     id='studentID'
                     name='studentID'
@@ -153,8 +192,9 @@ const StudentProfileUpdateByAAD = () => {
                   />
                 </FormControl>
                 <FormControl id='name' isRequired>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <Input
+                    disabled={editDisabled}
                     defaultValue={student?.name}
                     id='name'
                     name='name'
@@ -164,9 +204,10 @@ const StudentProfileUpdateByAAD = () => {
                   />
                 </FormControl>
                 <FormControl id='email' isRequired isInvalid={Boolean(errors?.email?.message)}>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Địa chỉ email</FormLabel>
                   <InputGroup>
                     <Input
+                      disabled={editDisabled}
                       id='email'
                       name='email'
                       type='email'
@@ -175,7 +216,7 @@ const StudentProfileUpdateByAAD = () => {
                       {...register('email', {
                         pattern: {
                           value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                          message: 'Email is not valid',
+                          message: 'Địa chỉ email không hợp lệ',
                         },
                       })}
                     />
@@ -183,8 +224,9 @@ const StudentProfileUpdateByAAD = () => {
                   <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
                 </FormControl>
                 <Box>
-                  <Text mb={4}>Date of birth</Text>
+                  <Text mb={4}>Ngày sinh</Text>
                   <DatePicker
+                    disabled={editDisabled}
                     onChange={(value) => {
                       return setDate(value)
                     }}
@@ -192,9 +234,10 @@ const StudentProfileUpdateByAAD = () => {
                   />
                 </Box>
                 <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <InputGroup>
                     <Input
+                      disabled={editDisabled}
                       id='phone'
                       name='phone'
                       type='tel'
@@ -203,7 +246,7 @@ const StudentProfileUpdateByAAD = () => {
                       {...register('phone', {
                         pattern: {
                           value: /^\d{9,11}$/,
-                          message: 'Phone number is invalid!',
+                          message: 'Số điện thoại không hợp lệ!',
                         },
                       })}
                     />
@@ -211,8 +254,9 @@ const StudentProfileUpdateByAAD = () => {
                   <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
                 </FormControl>
                 <FormControl id='studentClass' isRequired>
-                  <FormLabel>Class</FormLabel>
+                  <FormLabel>Lớp</FormLabel>
                   <Input
+                    disabled={editDisabled}
                     defaultValue={student?.class}
                     id='studentClass'
                     name='studentClass'
@@ -222,8 +266,9 @@ const StudentProfileUpdateByAAD = () => {
                   />
                 </FormControl>
                 <FormControl id='major' isRequired>
-                  <FormLabel>Major</FormLabel>
+                  <FormLabel>Chuyên ngành</FormLabel>
                   <Input
+                    disabled={editDisabled}
                     defaultValue={student?.major}
                     id='major'
                     name='major'
@@ -233,22 +278,31 @@ const StudentProfileUpdateByAAD = () => {
                   />
                 </FormControl>
                 <FormControl id='cpa' isRequired>
-                  <FormLabel>CPA</FormLabel>
-                  <Input defaultValue={student?.cpa} id='cpa' name='cpa' {...register('cpa')} type='text' required />
+                  <FormLabel>Điểm</FormLabel>
+                  <Input
+                    disabled={editDisabled}
+                    defaultValue={student?.cpa}
+                    id='cpa'
+                    name='cpa'
+                    {...register('cpa')}
+                    type='text'
+                    required
+                  />
                 </FormControl>
                 <FormControl id='qualifiedForGraduation' isRequired>
-                  <FormLabel>Qualified For Graduation</FormLabel>
+                  <FormLabel>Đủ điều kiện tốt nghiệp</FormLabel>
                   <Select
+                    disabled={editDisabled}
                     placeholder='Select option'
                     defaultValue={`${student?.qualifiedForGraduation}`}
                     {...register('qualifiedForGraduation')}>
-                    <option value='true'>True</option>
-                    <option value='false'>False</option>
+                    <option value='true'>Đã đủ</option>
+                    <option value='false'>Chưa đủ</option>
                   </Select>
                 </FormControl>
 
-                <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
-                  Update
+                <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading || editDisabled}>
+                  Cập nhật
                 </Button>
               </Stack>
             </form>

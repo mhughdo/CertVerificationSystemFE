@@ -9,7 +9,7 @@ const register = () => {
         <Box textAlign='center'>
           <Image src='/logo.png' width={50} height={60} />
           <Text color='white' fontSize='3xl'>
-            Welcome to UET Certificate Verification System
+            Chào mừng tới Hệ thống quản lý bằng tốt nghiệp
           </Text>
         </Box>
         <Container

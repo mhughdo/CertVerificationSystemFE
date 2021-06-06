@@ -57,58 +57,64 @@ const CompanyList = () => {
           <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
           <Input
             value={searchInput}
-            placeholder='Search company'
+            placeholder='Tìm kiếm công ty'
             onChange={(e) => {
               return setSearchInput(e.target.value)
             }}
           />
         </InputGroup>
       </Box>
-      <Grid templateColumns='repeat(3, 1fr)' gap={6}>
-        {filtered?.map((company, index) => {
-          return (
-            <LinkBox
-              key={index}
-              as='article'
-              w='100%'
-              bg='gray.50'
-              padding={8}
-              pb={2}
-              borderRadius='lg'
-              sx={{
-                ':hover  #arrow': {
-                  opacity: '1 !important',
-                },
-              }}>
-              <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
-                <Link href={`/company/${index}/view`} passHref>
-                  <LinkOverlay>{company.name}</LinkOverlay>
-                </Link>
-              </Text>
-              <ReactMarkdown children={company.description} />
-              <Box d='flex' alignItems='baseline'>
-                <Text fontSize='sm' mt={4} fontWeight='500' mr={2}>
-                  See more
+      {
+        filtered?.length ? <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+          {filtered?.map((company, index) => {
+            return (
+              <LinkBox
+                key={index}
+                as='article'
+                w='100%'
+                bg='gray.50'
+                padding={8}
+                pb={2}
+                borderRadius='lg'
+                sx={{
+                  ':hover  #arrow': {
+                    opacity: '1 !important',
+                  },
+                }}>
+                <Text fontSize='xl' fontWeight='bold' mb={2} _hover={{ color: '#4433ff' }}>
+                  <Link href={`/company/${index}/view`} passHref>
+                    <LinkOverlay>{company.name}</LinkOverlay>
+                  </Link>
                 </Text>
-                <svg
-                  id='arrow'
-                  width='36'
-                  height='10'
-                  viewBox='0 0 36 12'
-                  fill='none'
-                  style={{ opacity: 0, transition: 'opacity 125ms ease 0s' }}>
-                  <path
-                    d='M0.75 6H11.25 M6 0.75L11.25 6L6 11.25'
-                    stroke='#4433ff'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </Box>
-            </LinkBox>
-          )
-        })}
-      </Grid>
+                <ReactMarkdown children={company.description} />
+                <Box d='flex' alignItems='baseline'>
+                  <Text fontSize='sm' mt={4} fontWeight='500' mr={2}>
+                    See more
+                  </Text>
+                  <svg
+                    id='arrow'
+                    width='36'
+                    height='10'
+                    viewBox='0 0 36 12'
+                    fill='none'
+                    style={{ opacity: 0, transition: 'opacity 125ms ease 0s' }}>
+                    <path
+                      d='M0.75 6H11.25 M6 0.75L11.25 6L6 11.25'
+                      stroke='#4433ff'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </Box>
+              </LinkBox>
+            )
+          })}
+        </Grid> : (<Text textAlign='center' w='100%' fontWeight='500'>
+          Không có công ty nào được tìm thấy
+        </Text>)
+      }
+
+
     </Box>
   )
 }

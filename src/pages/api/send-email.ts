@@ -34,9 +34,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   ).replace('{activation_url}', activationURL)
 
   const data = {
-    from: 'UET Academic Affairs Department <academic-affairs@uet-cert-verification.hughdo.dev>',
+    from: 'Phòng đào tạo Đại học Công nghệ <academic-affairs@uet-cert-verification.hughdo.dev>',
     to,
-    subject: 'Account activation!',
+    subject: 'Kích hoạt tài khoản!',
     html: emailTemplate,
   }
 

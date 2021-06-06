@@ -47,12 +47,17 @@ const AADUserManage = () => {
   return (
     <Box px={4}>
       <Text mb={4} fontSize='2xl' fontWeight='bold'>
-        Academic Affairs Accounts
+        Danh sách tài khoản
       </Text>
 
       <Box d='flex' justifyContent='flex-end' mb={8}>
-        <Button colorScheme='teal' size='md' onClick={() => Router.push('/aadaccount/new')}>
-          Create new account
+        <Button
+          colorScheme='teal'
+          size='md'
+          onClick={() => {
+            return Router.push('/aadaccount/new')
+          }}>
+          Tạo tài khoản mới
         </Button>
       </Box>
 

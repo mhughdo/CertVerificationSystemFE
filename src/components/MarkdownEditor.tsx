@@ -67,6 +67,7 @@ const MarkdownEditor: FC<ReadOnly | Editable> = ({ initValue, setValue, readOnly
         },
       }}>
       <Editor
+        placeholder='Viết một điều gì đó, có thể kéo thả ảnh vào đây.'
         readOnly={readOnly}
         {...(!!initValue && { defaultValue: initValue })}
         uploadImage={async (file: File) => {

@@ -18,28 +18,28 @@ const StudentTable: FC<{ studentList: Student[] }> = ({ studentList }) => {
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Student ID
+                          MSSV
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Name
+                          Tên
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Class
+                          Lớp
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Major
+                          Chuyên ngành
                         </th>
 
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Status
+                          Trạng thái
                         </th>
                       </tr>
                     </thead>
@@ -58,9 +58,9 @@ const StudentTable: FC<{ studentList: Student[] }> = ({ studentList }) => {
                               <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{account.major}</td>
                               <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                                 {account.isActive ? (
-                                  <Tag colorScheme='green'>Active</Tag>
+                                  <Tag colorScheme='green'>Đã kích hoạt</Tag>
                                 ) : (
-                                  <Tag colorScheme='red'>Unactivated</Tag>
+                                  <Tag colorScheme='red'>Chưa kích hoạt</Tag>
                                 )}
                               </td>
                             </tr>
@@ -68,7 +68,7 @@ const StudentTable: FC<{ studentList: Student[] }> = ({ studentList }) => {
                         })
                       ) : (
                         <tr>
-                          <td className='p-4'>No data</td>
+                          <td className='p-4'>Không có dữ liệu</td>
                         </tr>
                       )}
                     </tbody>

@@ -36,7 +36,7 @@ const CompanyManage = () => {
   return (
     <Layout>
       <Text mb={8} fontSize='2xl' fontWeight='bold'>
-        Company Management
+        Danh sách công ty
       </Text>
 
       <CompanyTable companyList={companyList} setCompanyList={setCompanyList} />

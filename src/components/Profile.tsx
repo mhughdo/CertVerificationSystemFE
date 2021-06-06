@@ -17,7 +17,7 @@ const UpdateLink = () => {
           aria-hidden='true'>
           <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z' />
         </svg>
-        Update
+        Cập nhật
       </a>
     </Link>
   )
@@ -35,48 +35,50 @@ const StudentProfile = ({ student }: { student: Student }) => {
             <div>
               <div className='flex justify-between items-center'>
                 <div>
-                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Student Information</h3>
-                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Sinh viên</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Thông tin cá nhân</p>
                 </div>
                 <UpdateLink />
               </div>
               <div className='mt-5 border-t border-gray-200'>
                 <dl className='sm:divide-y sm:divide-gray-200'>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Student ID</dt>
+                    <dt className='text-sm font-medium text-gray-500'>MSSV</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{id}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Tên</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Email address</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Địa chỉ email</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{email}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Ngày sinh</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Số điện thoại</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Class</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Lớp</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{studentClass}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Major</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Chuyên ngành</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{major}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>CPA</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Điểm</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{cpa}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Qualified For Graduation</dt>
-                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{`${qualifiedForGraduation}`}</dd>
+                    <dt className='text-sm font-medium text-gray-500'>Đủ điều kiện tốt nghiệp</dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{`${
+                      qualifiedForGraduation ? 'Đã đủ' : 'Chưa đủ'
+                    }`}</dd>
                   </div>
                 </dl>
               </div>
@@ -99,27 +101,27 @@ const RectorProfile = ({ rector }: { rector: Rector }) => {
             <div>
               <div className='flex justify-between items-center'>
                 <div>
-                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Rector Information</h3>
-                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Hiệu trưởng</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Thông tin cá nhân</p>
                 </div>
                 <UpdateLink />
               </div>
               <div className='mt-5 border-t border-gray-200'>
                 <dl className='sm:divide-y sm:divide-gray-200'>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Tên</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Ngày sinh</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Số điện thoại</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>term</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Nhiệm kỳ</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{term}</dd>
                   </div>
                 </dl>
@@ -143,23 +145,23 @@ const AADUserProfile = ({ account }: { account: AADUser }) => {
             <div>
               <div className='flex justify-between items-center'>
                 <div>
-                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Academic Department User Information</h3>
-                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Personal details</p>
+                  <h3 className='text-lg leading-6 font-medium text-gray-900'>Phòng đào tạo</h3>
+                  <p className='mt-1 max-w-2xl text-sm text-gray-500'>Thông tin cá nhân</p>
                 </div>
                 <UpdateLink />
               </div>
               <div className='mt-5 border-t border-gray-200'>
                 <dl className='sm:divide-y sm:divide-gray-200'>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Name</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Tên</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{name}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Date of birth</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Ngày sinh</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{date}</dd>
                   </div>
                   <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
-                    <dt className='text-sm font-medium text-gray-500'>Phone</dt>
+                    <dt className='text-sm font-medium text-gray-500'>Số điện thoại</dt>
                     <dd className='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>{phone}</dd>
                   </div>
                 </dl>

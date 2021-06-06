@@ -70,22 +70,29 @@ const NewAADAccount = () => {
   }
 
   return (
-    <Layout pageTitle='New Academic Affairs Accounts'>
+    <Layout pageTitle='Tạo tài khoản phòng đào tạo mới'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing='6'>
                 <FormControl id='address' isRequired>
-                  <FormLabel>Address</FormLabel>
-                  <Input id='address' name='address' {...register('address')} type='text' required />
+                  <FormLabel>Địa chỉ ví</FormLabel>
+                  <Input
+                    placeholder='0xC7d4727a4E5782F41c9de00fE2ff3B12023588B7'
+                    id='address'
+                    name='address'
+                    {...register('address')}
+                    type='text'
+                    required
+                  />
                 </FormControl>
                 <FormControl id='name' isRequired>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <Input id='name' name='name' {...register('name')} type='text' required />
                 </FormControl>
                 <Box>
-                  <Text mb={4}>Date of birth</Text>
+                  <Text mb={4}>Ngày sinh</Text>
                   <DatePicker
                     onChange={(value) => {
                       return setDate(value)
@@ -94,7 +101,7 @@ const NewAADAccount = () => {
                   />
                 </Box>
                 <FormControl id='phone_numner' isRequired isInvalid={Boolean(errors?.phone_number?.message)}>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <InputGroup>
                     <Input
                       id='phone_numner'

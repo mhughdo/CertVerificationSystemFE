@@ -91,17 +91,17 @@ const RectorProfileUpdate = () => {
   }
 
   return (
-    <Layout>
+    <Layout pageTitle='Cập nhật tài khoản của bạn'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box d='flex' alignItems='center' justifyContent='center'>
           <Box flex='1 1' bg='white' py='8' px={4} shadow='base' rounded='lg' maxW='40%'>
             <Stack spacing='6'>
               <FormControl id='name' isRequired>
-                <FormLabel>Rector Name</FormLabel>
+                <FormLabel>Tên</FormLabel>
                 <Input defaultValue={name} {...register('name')} id='name' name='name' type='text' required />
               </FormControl>
               <Box>
-                <Text mb={4}>Date of birth</Text>
+                <Text mb={4}>Ngày sinh</Text>
                 <DatePicker
                   onChange={(value) => {
                     return setDate(value)
@@ -110,7 +110,7 @@ const RectorProfileUpdate = () => {
                 />
               </Box>
               <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
-                <FormLabel>Phone number</FormLabel>
+                <FormLabel>Số điện thoại</FormLabel>
                 <Input
                   id='phone'
                   name='phone'
@@ -127,12 +127,12 @@ const RectorProfileUpdate = () => {
                 <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
               </FormControl>
               <FormControl id='term' isRequired>
-                <FormLabel>Term</FormLabel>
+                <FormLabel>Nhiệm kỳ</FormLabel>
                 <Input defaultValue={term} {...register('term')} id='term' name='term' type='text' required />
               </FormControl>
             </Stack>
             <Button colorScheme='teal' mt={8} type='submit' disabled={loading} w='100%'>
-              Update
+              Cập nhật
             </Button>
           </Box>
         </Box>
@@ -190,14 +190,14 @@ const StudentProfileUpdate = () => {
   }
 
   return (
-    <Layout pageTitle='Update your account'>
+    <Layout pageTitle='Cập nhật tài khoản của bạn'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing='6'>
                 <FormControl id='email' isRequired isInvalid={Boolean(errors?.email?.message)}>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Địa chỉ email</FormLabel>
                   <InputGroup>
                     <Input
                       id='email'
@@ -216,7 +216,7 @@ const StudentProfileUpdate = () => {
                   <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
                 </FormControl>
                 <FormControl id='phone' isRequired isInvalid={Boolean(errors?.phone?.message)}>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <InputGroup>
                     <Input
                       id='phone'
@@ -236,7 +236,7 @@ const StudentProfileUpdate = () => {
                 </FormControl>
 
                 <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
-                  Update
+                  Cập nhật
                 </Button>
               </Stack>
             </form>
@@ -309,18 +309,18 @@ const AADUserProfileUpdate = () => {
   }
 
   return (
-    <Layout pageTitle='Update Academic Affairs Department Account'>
+    <Layout pageTitle='Cập nhật tài khoản của bạn'>
       <Container pb='12' px={{ sm: '6', lg: '8' }} color='black' maxW='container.md'>
         <Box mx={{ sm: 'auto' }} mt='8' w={{ sm: 'full' }}>
           <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing='6'>
                 <FormControl id='name' isRequired>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <Input defaultValue={name} id='name' name='name' {...register('name')} type='text' required />
                 </FormControl>
                 <Box>
-                  <Text mb={4}>Date of birth</Text>
+                  <Text mb={4}>Ngày sinh</Text>
                   <DatePicker
                     onChange={(value) => {
                       return setDate(value)
@@ -329,7 +329,7 @@ const AADUserProfileUpdate = () => {
                   />
                 </Box>
                 <FormControl id='phone_numner' isRequired isInvalid={Boolean(errors?.phone_number?.message)}>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <InputGroup>
                     <Input
                       id='phone_numner'
@@ -349,7 +349,7 @@ const AADUserProfileUpdate = () => {
                 </FormControl>
 
                 <Button type='submit' colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
-                  Create
+                  Cập nhật
                 </Button>
               </Stack>
             </form>
@@ -404,13 +404,13 @@ const CompanyProfileUpdate = () => {
   }
 
   return (
-    <Layout pageTitle='Update your profile'>
+    <Layout pageTitle='Cập nhật tài khoản của bạn'>
       <Container px={8} color='black' maxW='container.md'>
         <Box bg='white' py='8' px={{ base: '4', md: '10' }} shadow='base' rounded={{ sm: 'lg' }}>
           <form>
             <Stack spacing='6'>
               <FormControl id='company-name'>
-                <FormLabel>Company name</FormLabel>
+                <FormLabel>Tên</FormLabel>
                 <Input
                   value={companyName}
                   onChange={(e) => {
@@ -423,15 +423,15 @@ const CompanyProfileUpdate = () => {
                 />
               </FormControl>
               <Box>
-                <Text mb={2}>Description</Text>
+                <Text mb={2}>Mô tả</Text>
                 <MarkdownEditor initValue={initDes} setValue={setDescription} />
               </Box>
               <Box>
-                <Text mb={2}>Job description</Text>
+                <Text mb={2}>Mô tả công việc</Text>
                 <MarkdownEditor initValue={initJobDes} setValue={setJobDescription} />
               </Box>
               <Button onClick={onSubmit} colorScheme='teal' size='lg' fontSize='md' disabled={loading}>
-                Update
+                Cập nhật
               </Button>
             </Stack>
           </form>

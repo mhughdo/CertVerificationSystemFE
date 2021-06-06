@@ -34,7 +34,7 @@ const NewCert = () => {
       if (!studentID) {
         toast({
           title: 'Error.',
-          description: 'Please select student!',
+          description: 'Vui lòng chọn 1 sinh viên!',
           status: 'error',
           duration: 3000,
           position: 'top',
@@ -47,8 +47,8 @@ const NewCert = () => {
       await certContract.methods.createCertificate(studentID).send({ from: accountAddress })
 
       toast({
-        title: 'Success',
-        description: 'Certificate was successfully created!',
+        title: 'Thành công',
+        description: 'Bằng tốt nghiệp đã được tạo thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -58,8 +58,8 @@ const NewCert = () => {
     } catch (error) {
       console.log(error)
       toast({
-        title: 'Error.',
-        description: 'Error while creating certificate!',
+        title: 'Lỗi.',
+        description: 'Đã có lỗi khi tạo bằng tốt nghiệp!',
         status: 'error',
         duration: 3000,
         position: 'top',
@@ -77,9 +77,18 @@ const NewCert = () => {
 
         if (students?.length) {
           const normalizedStudents = students.map(normalizeWeb3Object) as Student[]
-          setStudents(normalizedStudents)
+          const qualifiedStudents = [] as Student[]
+
+          for (const s of normalizedStudents) {
+            const certCount = await certContract.methods.getStudentCertCount(s.id).call({ from: accountAddress })
+            if (Number(certCount) === 0) {
+              qualifiedStudents.push(s)
+            }
+          }
+
+          setStudents(qualifiedStudents)
           setOptions(
-            normalizedStudents.map((s) => {
+            qualifiedStudents.map((s) => {
               return { label: `${s.id} - ${s.name}`, value: s.id }
             })
           )
@@ -88,7 +97,7 @@ const NewCert = () => {
         console.log(error)
         toast({
           title: 'Error.',
-          description: 'Error occured while fecthing qualified students account!',
+          description: 'Đã có lỗi xả ra khi lấy danh sách sinh viên đủ điều kiện tốt nghiệp!',
           status: 'error',
           duration: 2000,
           position: 'top',
@@ -105,7 +114,7 @@ const NewCert = () => {
     <Layout>
       <Box d='flex' justifyContent='center'>
         <Box flex='1 1' bg='white' py='8' px={4} shadow='base' rounded='lg' maxW='40%'>
-          <Text mb={4}>Student ID</Text>
+          <Text mb={4}>MSSV</Text>
           <Select
             loading={selectLoading}
             options={options}
@@ -135,35 +144,35 @@ const NewCert = () => {
               <form>
                 <Stack spacing='6'>
                   <FormControl id='name'>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Tên</FormLabel>
                     <Input id='name' name='name' type='text' isReadOnly value={student.name} />
                   </FormControl>
                   <FormControl id='email'>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Địa chỉ email</FormLabel>
                     <InputGroup>
                       <Input id='email' name='email' type='email' isReadOnly value={student.email} />
                     </InputGroup>
                   </FormControl>
                   <Box>
-                    <Text mb={4}>Date of birth</Text>
+                    <Text mb={4}>Ngày sinh</Text>
                     <Text>{student.date}</Text>
                   </Box>
                   <FormControl id='phone'>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel>Số điện thoại</FormLabel>
                     <InputGroup>
                       <Input id='phone' name='phone' type='tel' isReadOnly value={student.phone} />
                     </InputGroup>
                   </FormControl>
                   <FormControl id='studentClass'>
-                    <FormLabel>Class</FormLabel>
+                    <FormLabel>Lớp</FormLabel>
                     <Input id='studentClass' name='studentClass' type='text' isReadOnly value={student.class} />
                   </FormControl>
                   <FormControl id='major'>
-                    <FormLabel>Major</FormLabel>
+                    <FormLabel>Chuyên ngành</FormLabel>
                     <Input id='major' name='major' type='text' isReadOnly value={student.major} />
                   </FormControl>
                   <FormControl id='cpa'>
-                    <FormLabel>CPA</FormLabel>
+                    <FormLabel>Điểm</FormLabel>
                     <Input id='cpa' name='cpa' type='text' isReadOnly value={student.cpa} />
                   </FormControl>
                 </Stack>
@@ -172,7 +181,7 @@ const NewCert = () => {
           )}
 
           <Button colorScheme='teal' size='lg' onClick={createCert} w='100%' mt={4} disabled={loading || !studentID}>
-            Create
+            Tạo
           </Button>
         </Box>
       </Box>

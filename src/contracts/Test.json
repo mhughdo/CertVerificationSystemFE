@@ -1,0 +1,221 @@
+{
+  "contractName": "Test",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Test.sol\":\"Test\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Model.sol\":{\"keccak256\":\"0x956b4f53c6a8ba8bbb24c115511da972810644e7e950b71306572b2f003e847c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://218769c41856ef63dc550dbff55b20af260c754fe3b467a0670fa71deb04841d\",\"dweb:/ipfs/QmfWPrLu6PkrhamBv3WkRVLRAbcw5Cx2dksfAveAw7agNf\"]},\"/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Test.sol\":{\"keccak256\":\"0x3c2e2f76742a1ffcb1d7507c6ed721db140bc15ea9ab9b0b87c3fc828739032b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8388202492f9d4d59ebce375422e402e82e33c7d2992545efd50e3007c8a918e\",\"dweb:/ipfs/QmWy3cDirCPXCtRhpWk66vzPHsgN1PfN4fq2P3qQWAG7Sg\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220db8f92a60268bad0b34e90814c9a6586a7285c2c879bc7a6c4b91f9e2cb26ad564736f6c63430008030033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220db8f92a60268bad0b34e90814c9a6586a7285c2c879bc7a6c4b91f9e2cb26ad564736f6c63430008030033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "88:44:3:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "88:44:3:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.7.0 <0.9.0;\n\nimport \"./Model.sol\";\n\ncontract Test {\n    Model.role roles;\n    \n}",
+  "sourcePath": "/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Test.sol",
+  "ast": {
+    "absolutePath": "/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Test.sol",
+    "exportedSymbols": {
+      "Model": [
+        720
+      ],
+      "Test": [
+        1017
+      ]
+    },
+    "id": 1018,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1012,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.7",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:31:3"
+      },
+      {
+        "absolutePath": "/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Model.sol",
+        "file": "./Model.sol",
+        "id": 1013,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 1018,
+        "sourceUnit": 721,
+        "src": "65:21:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 1017,
+        "linearizedBaseContracts": [
+          1017
+        ],
+        "name": "Test",
+        "nameLocation": "97:4:3",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 1016,
+            "mutability": "mutable",
+            "name": "roles",
+            "nameLocation": "119:5:3",
+            "nodeType": "VariableDeclaration",
+            "scope": 1017,
+            "src": "108:16:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_role_$643_storage",
+              "typeString": "struct Model.role"
+            },
+            "typeName": {
+              "id": 1015,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 1014,
+                "name": "Model.role",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 643,
+                "src": "108:10:3"
+              },
+              "referencedDeclaration": 643,
+              "src": "108:10:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_role_$643_storage_ptr",
+                "typeString": "struct Model.role"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "scope": 1018,
+        "src": "88:44:3"
+      }
+    ],
+    "src": "32:100:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Test.sol",
+    "exportedSymbols": {
+      "Model": [
+        720
+      ],
+      "Test": [
+        1017
+      ]
+    },
+    "id": 1018,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1012,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.7",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:31:3"
+      },
+      {
+        "absolutePath": "/Users/hughdo/Desktop/Proj/CertVerificationSystem/contracts/Model.sol",
+        "file": "./Model.sol",
+        "id": 1013,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 1018,
+        "sourceUnit": 721,
+        "src": "65:21:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 1017,
+        "linearizedBaseContracts": [
+          1017
+        ],
+        "name": "Test",
+        "nameLocation": "97:4:3",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 1016,
+            "mutability": "mutable",
+            "name": "roles",
+            "nameLocation": "119:5:3",
+            "nodeType": "VariableDeclaration",
+            "scope": 1017,
+            "src": "108:16:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_role_$643_storage",
+              "typeString": "struct Model.role"
+            },
+            "typeName": {
+              "id": 1015,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 1014,
+                "name": "Model.role",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 643,
+                "src": "108:10:3"
+              },
+              "referencedDeclaration": 643,
+              "src": "108:10:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_role_$643_storage_ptr",
+                "typeString": "struct Model.role"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "scope": 1018,
+        "src": "88:44:3"
+      }
+    ],
+    "src": "32:100:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.3+commit.8d00100c.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-04-19T04:25:16.965Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

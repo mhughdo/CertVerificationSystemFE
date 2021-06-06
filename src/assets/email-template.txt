@@ -223,8 +223,7 @@
                                                             <td
                                                               style="font-size:16px; line-height:10px; padding:0px 0px 0px 0px;"
                                                               valign="top" align="center">
-                                                              <div style="font-size:16px;">UET Certificate Verification
-                                                                System</div>
+                                                              <div style="font-size:16px;">Hệ thống quản lý bằng tốt nghiệp</div>
                                                             </td>
                                                           </tr>
                                                         </tbody>
@@ -254,8 +253,7 @@
                                                               role="module-content">
                                                               <div>
                                                                 <div style="font-family: inherit; text-align: center">
-                                                                  <span style="font-size: 28px">Your student account has
-                                                                    been created by Academic Affairs Department</span>
+                                                                  <span style="font-size: 28px">Tài khoản của bạn đã được tạo bởi phòng đào tạo.</span>
                                                                 </div>
                                                                 <div></div>
                                                               </div>
@@ -276,11 +274,9 @@
                                                               role="module-content">
                                                               <div>
                                                                 <div style="font-family: inherit; text-align: center">
-                                                                  <span style="font-size: 18px">Please verify your
-                                                                    account
-                                                                    to</span><span
+                                                                  <span style="font-size: 18px">Vui lòng kích hoạt tài khoản của bạn để</span><span
                                                                     style="color: #000000; font-size: 18px; font-family: arial,helvetica,sans-serif">
-                                                                    check your certificate!</span><span
+                                                                    xem bằng tốt nghiệp!</span><span
                                                                     style="font-size: 18px">.</span>
                                                                 </div>
 
@@ -320,7 +316,7 @@
                                                                       style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
                                                                       <a href="{activation_url}"
                                                                         style="background-color:#ffbe00; border:1px solid #ffbe00; border-color:#ffbe00; border-radius:0px; border-width:1px; color:#000000; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 40px 12px 40px; text-align:center; text-decoration:none; border-style:solid; font-family:inherit;"
-                                                                        target="_blank">Verify Account Now</a>
+                                                                        target="_blank">Bấm vào đây để kích hoạt</a>
                                                                     </td>
                                                                   </tr>
                                                                 </tbody>

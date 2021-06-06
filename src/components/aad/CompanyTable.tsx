@@ -38,8 +38,8 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
 
         setCompanyList(newAccountList)
         toast({
-          title: 'Success',
-          description: 'Account was successfully activated!',
+          title: 'Thành công',
+          description: 'Tài khoản được kích hoạt thành công!',
           status: 'success',
           duration: 2000,
           position: 'top',
@@ -48,8 +48,8 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
         console.log('Error getting account', error)
         if (error?.code === 4001) {
           toast({
-            title: 'Info',
-            description: 'Canceled account activation!',
+            title: 'Thông tin',
+            description: 'Đã huỷ việc kích hoạt tài khoản!',
             status: 'info',
             duration: 2000,
             position: 'top',
@@ -57,8 +57,8 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
           return
         }
         toast({
-          title: 'Error.',
-          description: 'Error occured while activating account!',
+          title: 'Lỗi.',
+          description: 'Đã có lỗi xảy ra khi kích hoạt tài khoản!',
           status: 'error',
           duration: 3000,
           position: 'top',
@@ -81,15 +81,15 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Name
+                          Tên
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Description
+                          Mô tả
                         </th>
                         <th scope='col' className='relative px-6 py-3'>
-                          <span className='sr-only'>Activate</span>
+                          <span className='sr-only'>Kích hoạt</span>
                         </th>
                       </tr>
                     </thead>
@@ -108,9 +108,9 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                               </td>
                               <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                                 {account.isActive ? (
-                                  <Tag colorScheme='green'>Active</Tag>
+                                  <Tag colorScheme='green'>Đã kích hoạt</Tag>
                                 ) : (
-                                  <Tag colorScheme='red'>Unactivated</Tag>
+                                  <Tag colorScheme='red'>Chưa kích hoạt</Tag>
                                 )}
                               </td>
                               <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
@@ -119,14 +119,14 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                                     return (
                                       <>
                                         <PopoverTrigger>
-                                          <Button disabled={account.isActive}>Activate</Button>
+                                          <Button disabled={account.isActive}>Kích hoạt</Button>
                                         </PopoverTrigger>
                                         <Portal>
                                           <PopoverContent>
                                             <PopoverArrow />
                                             <PopoverCloseButton />
-                                            <PopoverHeader>Confirmation!</PopoverHeader>
-                                            <PopoverBody>Are you sure you want to activate this account?</PopoverBody>
+                                            <PopoverHeader>Xác nhận!</PopoverHeader>
+                                            <PopoverBody>Bạn có muốn kích hoạt tài khoản này?</PopoverBody>
                                             <PopoverFooter d='flex' justifyContent='flex-end'>
                                               <ButtonGroup size='sm'>
                                                 <Button
@@ -135,7 +135,7 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                                                     activateCompanyAccount(index)()
                                                     onClose()
                                                   }}>
-                                                  Activate
+                                                  Kích hoạt
                                                 </Button>
                                               </ButtonGroup>
                                             </PopoverFooter>
@@ -151,7 +151,7 @@ const CompanyTable: FC<{ companyList: Company[]; setCompanyList: (...args: any[]
                         })
                       ) : (
                         <tr>
-                          <td className='p-4'>No data</td>
+                          <td className='p-4'>Không có dữ liệu</td>
                         </tr>
                       )}
                     </tbody>

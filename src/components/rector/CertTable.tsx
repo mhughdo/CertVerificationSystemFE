@@ -161,11 +161,11 @@ const CertTable: FC<{
             mr={4}
             onClick={signCertificates}
             disabled={!hasOneCheckboxChecked}>
-            Sign certificates
+            Ký bằng tốt nghiệp
           </Button>
           {checkboxes.find((c) => {
             return !!c
-          }) && <Text>Selected {checkboxes.filter(Boolean).length} rows</Text>}
+          }) && <Text>Đã chọn {checkboxes.filter(Boolean).length} hàng</Text>}
         </Box>
       )}
 
@@ -200,38 +200,38 @@ const CertTable: FC<{
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Student ID
+                          MSSV
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Name
+                          Tên
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Class
+                          Lớp
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Major
+                          Chuyên ngành
                         </th>
 
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Grade
+                          Loại
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                          Status
+                          Trạng thái
                         </th>
 
                         {user.role === Role.RECTOR && (
                           <th scope='col' className='relative px-6 py-3'>
-                            <span className='sr-only'>Sign</span>
+                            <span className='sr-only'>Ký</span>
                           </th>
                         )}
                       </tr>
@@ -267,9 +267,9 @@ const CertTable: FC<{
                               <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{cert.grade}</td>
                               <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                                 {cert.signed ? (
-                                  <Tag colorScheme='green'>Signed</Tag>
+                                  <Tag colorScheme='green'>Đã ký</Tag>
                                 ) : (
-                                  <Tag colorScheme='red'>Not Signed</Tag>
+                                  <Tag colorScheme='red'>Chưa được ký</Tag>
                                 )}
                               </td>
                               {user.role === Role.RECTOR && (
@@ -280,15 +280,15 @@ const CertTable: FC<{
                                         <>
                                           <PopoverTrigger>
                                             <Button disabled={cert.signed || loading}>
-                                              {loading ? 'Signing' : 'Sign'}
+                                              {loading ? 'Đang ký' : 'Ký'}
                                             </Button>
                                           </PopoverTrigger>
                                           <Portal>
                                             <PopoverContent>
                                               <PopoverArrow />
                                               <PopoverCloseButton />
-                                              <PopoverHeader>Confirmation!</PopoverHeader>
-                                              <PopoverBody>Are you sure you want to sign this certificate?</PopoverBody>
+                                              <PopoverHeader>Xác nhận!</PopoverHeader>
+                                              <PopoverBody>Bạn có chắc muốn ký bằng tốt nghiệp này?</PopoverBody>
                                               <PopoverFooter d='flex' justifyContent='flex-end'>
                                                 <ButtonGroup size='sm'>
                                                   <Button
@@ -297,7 +297,7 @@ const CertTable: FC<{
                                                       signCertificate(index)()
                                                       onClose()
                                                     }}>
-                                                    Activate
+                                                    Ký
                                                   </Button>
                                                 </ButtonGroup>
                                               </PopoverFooter>
@@ -314,7 +314,7 @@ const CertTable: FC<{
                         })
                       ) : (
                         <tr>
-                          <td className='p-4'>No data</td>
+                          <td className='p-4'>Không có dữ liệu</td>
                         </tr>
                       )}
                     </tbody>

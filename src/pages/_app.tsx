@@ -16,9 +16,10 @@ import { AbiItem } from 'web3-utils/types/index'
 import { useToast } from '@chakra-ui/react'
 
 enum Error {
-  NO_METAMASK = 'Metamask not found! Please install MetaMask to continue.',
-  NOT_RINKEBY = 'Please connect to rinkeby network',
-  NOT_ACTIVATED = 'Your account is not activated yet. Contact Office of Academic Affairs for more information.',
+  NO_METAMASK = 'Không tìm thấy MetaMask! Vui lòng cài MetaMask để tiếp tục.',
+  NOT_RINKEBY = 'Vui lòng kết nối tới mạng rinkeby',
+  NOT_ACTIVATED = 'Tài khoản của bạn chưa được kích hoạt. Liên hệ Phòng đào tạo để biết thêm chi tiết',
+  OLD_RECTOR = 'Tài khoản hiệu trưởng của bạn đã bị huỷ kích hoạt.',
 }
 
 function SubApp({ Component, pageProps, router }: AppProps) {
@@ -45,9 +46,13 @@ function SubApp({ Component, pageProps, router }: AppProps) {
       if (err === Error.NOT_RINKEBY) return
       setAccountLoading(true)
       const accounts = await web3.eth.getAccounts()
+      console.log(accounts)
 
       if (accounts?.length) {
-        dispatch({ type: 'ADDRESS_CHANGE', accountAddress: accounts[0] })
+        dispatch({
+          type: 'ADDRESS_CHANGE',
+          accountAddress: process.env.NEXT_PUBLIC_APP_ENV === 'test' ? process.env.NEXT_PUBLIC_ADDRESS : accounts[0],
+        })
       }
       setAccountLoading(false)
     }
@@ -95,6 +100,7 @@ function SubApp({ Component, pageProps, router }: AppProps) {
         const netId = await web3.eth.net.getId()
         const networkAddress = UserContract.networks[netId]?.address && CertContract.networks[netId]?.address
         if (!networkAddress) {
+          window.alert('Network address not found, please connect to rinkeby network or network ID: 1337')
           toast({
             title: 'Error.',
             description: 'Network address not found, please connect to rinkeby network or network ID: 1337!',
@@ -147,6 +153,16 @@ function SubApp({ Component, pageProps, router }: AppProps) {
         return acc
       }, {}) as User
 
+      if (role.name === Role.RECTOR) {
+        const currentRector = await userContract.methods.getCurrentRector().call({ from: accountAddress })
+        if (normalizedUser.name !== currentRector.name) {
+          dispatch({ type: 'USER_CHANGE', user: { ...normalizedUser, role: role.name, isActive: false } })
+          setUserLoading(false)
+          setErr(Error.OLD_RECTOR)
+          return
+        }
+      }
+
       if (role.name !== Role.RECTOR && (normalizedUser as any)?.isActive === false) {
         setErr(Error.NOT_ACTIVATED)
       }
@@ -169,14 +185,6 @@ function SubApp({ Component, pageProps, router }: AppProps) {
       dispatch({ type: 'ADDRESS_CHANGE', accountAddress: accounts[0] })
     })
   }, [])
-
-  if (router.pathname === '/certificate/generate') {
-    return (
-      <Chakra cookies={pageProps.cookies}>
-        <Component {...pageProps} />
-      </Chakra>
-    )
-  }
 
   if (loading) {
     return (
