@@ -64,7 +64,7 @@ const RectorProfileUpdate = () => {
 
       toast({
         title: 'Success',
-        description: 'Rector was successfully transfered!',
+        description: 'Chuyển giao quyền hiệu trưởng thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -167,7 +167,7 @@ const StudentProfileUpdate = () => {
 
       toast({
         title: 'Success',
-        description: 'Account was successfully updated!',
+        description: 'Tài khoản được cập nhật thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -285,7 +285,7 @@ const AADUserProfileUpdate = () => {
       await userContract.methods.updateAADepartmentUser(name, formattedDate, phoneNumber).send({ from: accountAddress })
       toast({
         title: 'Success',
-        description: 'Account was successfully updated!',
+        description: 'Tài khoản được cập nhật thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -379,7 +379,7 @@ const CompanyProfileUpdate = () => {
 
       toast({
         title: 'Success',
-        description: 'Account was successfully updated!',
+        description: 'Tài khảon được cập nhật thành công!',
         status: 'success',
         duration: 1000,
         position: 'top',

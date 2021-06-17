@@ -68,7 +68,7 @@ const CertTable: FC<{
         setCertList(newCertList)
         toast({
           title: 'Success',
-          description: 'Cert was successfully signed!',
+          description: 'Bằng tốt nghiệp được tạo thành công!',
           status: 'success',
           duration: 2000,
           position: 'top',

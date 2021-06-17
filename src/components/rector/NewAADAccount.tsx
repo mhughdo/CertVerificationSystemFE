@@ -49,7 +49,7 @@ const NewAADAccount = () => {
         .send({ from: accountAddress })
       toast({
         title: 'Success',
-        description: 'Account was successfully created!',
+        description: 'Tài khoản được tạo thành công!',
         status: 'success',
         duration: 2000,
         position: 'top',
@@ -120,7 +120,7 @@ const NewAADAccount = () => {
                 </FormControl>
 
                 <Button type='submit' colorScheme='blue' size='lg' fontSize='md'>
-                  Create
+                  Tạo
                 </Button>
               </Stack>
             </form>

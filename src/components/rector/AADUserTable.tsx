@@ -38,7 +38,7 @@ const AADUserTable: FC<{ AADAccountList: AADUser[]; setAADAccountList: (...args:
         setAADAccountList(newAccountList)
         toast({
           title: 'Success',
-          description: 'Account was successfully deactivated!',
+          description: 'Tài khaonr đã được tạo thành công!',
           status: 'success',
           duration: 2000,
           position: 'top',

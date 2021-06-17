@@ -31,11 +31,11 @@ const Entry = ({ err }: { err: string }) => {
   }
 
   return (
-    <Box minW='100vw' minH='100vh' d='flex' justifyContent='center' bg='gray.300'>
+    <Box minW='100vw' minH='100vh' d='flex' justifyContent='center' bg='#0e1e25'>
       <Box mt={16} zIndex={9999}>
         <Box textAlign='center'>
           <Image src='/logo.png' width={50} height={60} />
-          <Text color='black' fontSize='3xl'>
+          <Text color='white' fontSize='3xl'>
             Chào mừng tới Hệ thống quản lý bằng tốt nghiệp
           </Text>
         </Box>

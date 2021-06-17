@@ -39849,10 +39849,10 @@
     "1337": {
       "events": {},
       "links": {
-        "SetGrade": "0x42e3F8D8b34beCE0E03c7753981a5AFdad3Dd13d"
+        "SetGrade": "0x1827b6614F80070dA645Dc60851c6F56f5C90DaE"
       },
-      "address": "0x6eD646C32399d7a17Cf627739460E43f97a61855",
-      "transactionHash": "0xb9cdf13b31e46bd7266f5ebcd04933096aae3eae939fb5f736f43ee741737d17"
+      "address": "0x3a12188E296182b894dE82AE39253472a5522cC6",
+      "transactionHash": "0xb1f26b8499a4bbe6d71ae53fe3780f1e1cbccdd0ccc2f3285b98d605e99402ba"
     },
     "1618655882999": {
       "events": {},
@@ -39864,7 +39864,7 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-06-04T07:27:17.023Z",
+  "updatedAt": "2021-06-14T18:11:13.051Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

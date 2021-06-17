@@ -65,7 +65,7 @@ const CertificateList = () => {
         console.log(error)
         toast({
           title: 'Error.',
-          description: 'Error while fetching user, make sure new rector address is valid!',
+          description: 'Đã có lỗi khi lấy thông tin hiệu trưởng!',
           status: 'error',
           duration: 3000,
           position: 'top',
@@ -106,8 +106,8 @@ const CertificateList = () => {
         </InputGroup>
       </Box>
 
-      {
-        filtered?.length ? <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+      {filtered?.length ? (
+        <Grid templateColumns='repeat(3, 1fr)' gap={6}>
           {filtered?.map((cert, index) => {
             return (
               <LinkBox
@@ -154,13 +154,12 @@ const CertificateList = () => {
               </LinkBox>
             )
           })}
-        </Grid> : (
-            (<Text textAlign='center' w='100%'>
-              Không có bằng tốt nghiệp nào được tìm thấy
-            </Text>)
-        )
-      }
-
+        </Grid>
+      ) : (
+        <Text textAlign='center' w='100%'>
+          Không có bằng tốt nghiệp nào được tìm thấy
+        </Text>
+      )}
     </Box>
   )
 }
